@@ -1,0 +1,46 @@
+# Copy to config.yaml. Paths are relative to this file. ${ENV_VARS} are expanded.
+
+template: templates/sample_hld_template.adoc     # point at your organisation's HLD .adoc template
+output_dir: out
+checkpoint_db: out/hld-threads.sqlite             # interrupt/resume state, per --thread
+
+llm:
+  model: fake                                      # offline scripted demo; set a real model for actual use
+  temperature: 0.2
+
+
+  # kwargs: {project: my-gcp-project, location: us-central1}
+
+retrieval:
+  providers:
+    - type: local                                  # standards, ADRs, past HLDs (.adoc/.md/.txt)
+      name: local-kb
+      paths: [examples/kb]
+
+    - type: mcp                                    # Stratum / EKG knowledge graph
+      name: stratum
+      transport: stdio                             # streamable_http for the deployed server
+      command: python
+      command_args: [examples/stratum_stub_server.py]
+      # transport: streamable_http
+      # url: https://stratum.internal/mcp
+      # headers: {Authorization: "Bearer ${STRATUM_TOKEN}"}
+      tool: search
+      args: {query: "{query}", k: "{k}", domain: dcs}
+      result:                                      # map Stratum's hit shape onto evidence fields
+        items: results
+        title: title
+        uri: uri
+        snippet: text
+        kind: artifact_type
+        score: score
+        revision: provenance.commit
+
+agent:
+  max_questions: 5          # architect questions before decisions
+  max_revisions: 2          # redraft rounds for sections with blocker/major findings
+  k_per_query: 5
+  evidence_per_section: 6
+  auto_approve_decisions: false
+  run_critic: true
+  diagram_syntax: mermaid   # or plantuml, to match your AsciiDoc toolchain

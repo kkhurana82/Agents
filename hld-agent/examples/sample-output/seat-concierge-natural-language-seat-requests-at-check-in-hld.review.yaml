@@ -1,0 +1,17 @@
+status: ready_for_review
+revision_rounds: 1
+sections_drafted: 13
+evidence_retrieved: 15
+evidence_cited: 6
+requirements_covered: 8/8
+decisions:
+  DEC-1: accepted
+  DEC-2: accepted
+  DEC-3: accepted
+retrieval_warnings: []
+findings:
+- section_id: security
+  severity: minor
+  rule: critic
+  issue: Token lifetime for service-to-service calls not stated.
+  fix: State the token lifetime or cite the IAM standard.

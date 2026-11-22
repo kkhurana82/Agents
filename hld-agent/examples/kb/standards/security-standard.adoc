@@ -1,0 +1,9 @@
+= API Security Standard
+
+== Service-to-service authentication
+Internal services authenticate with workload identity and short-lived OAuth2 tokens (15 minutes).
+No static API keys between internal services.
+
+== Personal data
+Passenger personal data (names, document numbers, contact details) must not leave the platform boundary
+without a data processing agreement. Free-text fields must be screened before they are sent to external processors.

@@ -1,0 +1,12 @@
+= Seat Assignment Service - HLD (approved)
+
+== Interfaces
+SeatAssignmentService exposes POST /flights/{flightId}/seat-assignments (synchronous, idempotency key required)
+and publishes SeatAssigned / SeatReleased events to the platform event bus (Pub/Sub topic seat-events).
+
+== Rules
+All carrier seat rules (restrictions, blocked rows, exit-row eligibility, infant rules) are evaluated inside
+SeatAssignmentService. Callers must not replicate rule logic.
+
+== Deployment
+Runs on GKE, three replicas per region, HPA on CPU and request latency.

@@ -1,0 +1,87 @@
+= <Feature> High-Level Design
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:revnumber: 0.1
+
+// Generic placeholder template. Replace this file with your organisation's HLD .adoc template.
+// The agent reads headings, guidance text and comments; '// hld:' hints are optional.
+
+[[document-control]]
+== Document Control
+// hld: mode=manual
+[cols="1,2,2,4",options="header"]
+|===
+|Version |Date |Author |Change
+|0.1 | | |Initial draft
+|===
+
+== Approvals
+[cols="2,2,1,2",options="header"]
+|===
+|Role |Name |Decision |Date
+|Solution Architect | | |
+|Engineering Manager | | |
+|===
+
+== Introduction
+=== Purpose
+State what this design enables and for whom, in two or three sentences.
+=== Scope
+List what is in scope and explicitly out of scope.
+=== Definitions and Acronyms
+Domain terms a reader outside the team needs.
+
+== Business Context
+Why the change is needed now, business goals and the actors involved.
+
+== Requirements Summary
+=== Functional Requirements
+Summarise functional requirements with their IDs.
+=== Non-Functional Requirements
+Summarise non-functional requirements with their IDs and measurable targets.
+
+== Current State
+// hld: min_citations=1
+Describe the existing systems, interfaces and data this change touches. Cite evidence for every existing component.
+
+== Solution Overview
+// hld: diagram=context
+Describe the solution at system-context level: actors, the new capability and the existing systems it interacts with.
+=== Key Design Decisions
+Summarise the decisions that shape the design and point to the decision log.
+
+== Solution Architecture
+// hld: diagram=container
+// hld-check: Every component has a single clear responsibility and an owner
+=== Component View
+Components and their relationships.
+=== Component Responsibilities
+A table of components, responsibilities and owning team.
+
+== Integration and Interfaces
+// hld: diagram=sequence, min_citations=1
+// hld-check: Each interface states protocol, direction, sync/async and error handling
+Interfaces consumed and exposed, message formats and the main interaction sequence.
+
+== Data Architecture
+Data ownership, entities, storage, retention and consistency model.
+
+== Non-Functional Design
+// hld: role=nfr
+// hld-check: Every NFR has a design response and, where possible, a measurable target
+How the design meets each non-functional requirement: performance, availability, scalability, resilience.
+
+== Security
+Authentication, authorisation, data protection, auditing and compliance.
+
+== Deployment and Operations
+// hld: diagram=deployment
+Runtime topology, environments, observability (logs, metrics, traces), alerting and runbooks.
+
+== Migration and Rollout
+Rollout strategy, feature flags, data migration, backward compatibility and rollback.
+
+== Risks and Dependencies
+Key risks with mitigations, and external dependencies.

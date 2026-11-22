@@ -1,0 +1,293 @@
+= Seat Concierge - natural-language seat requests at check-in - High-Level Design
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:revnumber: 0.1
+:hld-status: DRAFT
+:hld-generated: 2026-11-22
+:hld-generator: hld-agent
+:hld-story: US-1234
+
+[IMPORTANT]
+====
+AI-assisted draft generated 2026-11-22 by hld-agent. An architect must review every section. Statements about existing systems cite the evidence appendix; anything uncited is a proposal or an explicit assumption.
+====
+
+[[document-control]]
+== Document Control
+
+[cols="1,2,2,4",options="header"]
+|===
+|Version |Date |Author |Change
+|0.1 | | |Initial draft
+|===
+
+== Approvals
+
+[cols="2,2,1,2",options="header"]
+|===
+|Role |Name |Decision |Date
+|Solution Architect | | |
+|Engineering Manager | | |
+|===
+
+== Introduction
+
+=== Purpose
+
+This part covers purpose for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-1>> and applies DEC-1.
+
+=== Scope
+
+This part covers scope for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-1>> and applies DEC-1.
+
+=== Definitions and Acronyms
+
+This part covers definitions and acronyms for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-1>> and applies DEC-1.
+
+== Business Context
+
+This part covers business context for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-1>> and applies DEC-1.
+
+== Requirements Summary
+
+=== Functional Requirements
+
+[cols="1,5",options="header"]
+|===
+|ID |Requirement
+|FR-1 |Accept a free-text seat request for a checked-in or check-in-eligible passenger on a flight
+|FR-2 |Return up to three valid candidate seats ranked by fit, with a short explanation for each
+|FR-3 |Assign the chosen seat through the existing seat assignment path so all carrier rules and restrictions apply
+|FR-4 |Keep party members seated together when the request mentions companions on the same PNR
+|CON-1 |Seat assignment must go through the existing seat assignment service; no direct seat map writes
+|===
+
+=== Non-Functional Requirements
+
+[cols="1,5",options="header"]
+|===
+|ID |Requirement
+|NFR-1 |Candidate seats returned within p95 1.5 s
+|NFR-2 |99.9% availability during check-in windows
+|NFR-3 |No personal data sent to external model providers beyond the request text
+|===
+
+== Current State
+
+This part covers current state for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-8>> and applies DEC-1.
+
+== Solution Overview
+
+=== Key Design Decisions
+
+* DEC-1: see the decision log.
+* DEC-2: see the decision log.
+* DEC-3: see the decision log.
+
+[mermaid]
+....
+C4Context
+  Person(agent, "Actor")
+  System(sys, "New capability")
+  System_Ext(ext, "Existing system")
+  Rel(agent, sys, "uses")
+  Rel(sys, ext, "calls")
+....
+
+The flow satisfies FR-1, FR-2, FR-3, FR-4.
+
+== Solution Architecture
+
+=== Component View
+
+This part covers component view for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-1>> and applies DEC-1.
+
+=== Component Responsibilities
+
+This part covers component responsibilities for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-1>> and applies DEC-1.
+
+[mermaid]
+....
+flowchart LR
+  UI[Channel] --> API[Capability API]
+  API --> SVC[Domain service]
+  SVC --> DB[(Data store)]
+  SVC --> EXT[Existing system]
+....
+
+The flow satisfies FR-1, FR-2, FR-3, FR-4.
+
+== Integration and Interfaces
+
+This part covers integration and interfaces for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-2>> and applies DEC-1.
+
+[mermaid]
+....
+sequenceDiagram
+  participant C as Channel
+  participant S as Capability service
+  participant E as Existing system
+  C->>S: request
+  S->>E: query
+  E-->>S: result
+  S-->>C: response
+....
+
+== Data Architecture
+
+This part covers data architecture for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-7>> and applies DEC-1.
+
+== Non-Functional Design
+
+This part covers non-functional design for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-1>> and applies DEC-1.
+
+[cols="1,4",options="header"]
+|===
+|NFR |How the design meets it
+|NFR-1 |Addressed by horizontal scaling and the read model <<EV-1>>.
+|NFR-2 |Addressed by horizontal scaling and the read model <<EV-1>>.
+|NFR-3 |Addressed by horizontal scaling and the read model <<EV-1>>.
+|===
+
+== Security
+
+This part covers security for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-7>> and applies DEC-1.
+
+== Deployment and Operations
+
+This part covers deployment and operations for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-6>> and applies DEC-1.
+
+[mermaid]
+....
+flowchart TB
+  subgraph GKE[Kubernetes cluster]
+    SVC[Capability service x3]
+  end
+  SVC --> DB[(Managed database)]
+....
+
+== Migration and Rollout
+
+This part covers migration and rollout for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-1>> and applies DEC-1.
+
+== Risks and Dependencies
+
+This part covers risks and dependencies for Seat Concierge - natural-language seat requests at check-in. It builds on the existing platform capability <<EV-1>> and applies DEC-1.
+
+[appendix]
+== Design Decision Log
+
+[[DEC-1]]
+=== DEC-1: Reuse the existing domain service instead of a new store
+
+*Status:* accepted
+
+*Context:* Evidence shows an existing service already owns this data.
+
+*Options considered:*
+
+* Reuse existing service API
+* New dedicated data store
+
+*Decision:* Reuse existing service API
+
+*Rationale:* Avoids dual writes; satisfies FR-1 with less change.
+
+*Consequences:*
+
+* Dependency on existing service availability
+
+*Evidence:* <<EV-1>>, <<EV-2>>
+
+[[DEC-2]]
+=== DEC-2: Event-fed read model for display paths
+
+*Status:* accepted
+
+*Context:* Display traffic is read-heavy; commit path needs strong consistency.
+
+*Options considered:*
+
+* Synchronous reads everywhere
+* CQRS read model fed by events
+
+*Decision:* CQRS read model fed by events, synchronous validation at commit
+
+*Rationale:* Meets NFR-1 without loading the system of record.
+
+*Consequences:*
+
+* Eventual consistency on display paths
+* Needs replay on consumer lag
+
+*Evidence:* <<EV-12>>
+
+[[DEC-3]]
+=== DEC-3: Introduce a new message broker
+
+*Status:* accepted
+
+*Context:* Events need transport.
+
+*Options considered:*
+
+* Use the existing platform broker
+* New broker
+
+*Decision:* New broker
+
+*Rationale:* Isolation.
+
+*Consequences:*
+
+* Extra operational cost
+
+[appendix]
+== Assumptions and Open Issues
+
+=== Clarifications
+
+[cols="1,4,4,1",options="header"]
+|===
+|ID |Question |Answer / assumption |Source
+|Q-1 |Must the new capability read inventory synchronously from the system of record, or is a cached read model acceptable for display paths? |Cached read model for display; synchronous check at commit time. |default
+|Q-2 |Is a phased rollout per carrier required, or a single cut-over? |Phased rollout per carrier behind a feature flag. |default
+|===
+
+=== Assumptions
+
+* Volumes for Non-Functional Design assumed similar to current peak. _(section: non-functional-design)_
+
+=== Open Issues
+
+* Confirm rollout order with carrier operations. _(section: migration-and-rollout)_
+
+[appendix]
+== Requirements Traceability
+
+[cols="1,5,3",options="header"]
+|===
+|ID |Requirement |Addressed in
+|FR-1 |Accept a free-text seat request for a checked-in or check-in-eligible passenger on a flight |Requirements Summary, Solution Overview, Solution Architecture
+|FR-2 |Return up to three valid candidate seats ranked by fit, with a short explanation for each |Requirements Summary, Solution Overview, Solution Architecture
+|FR-3 |Assign the chosen seat through the existing seat assignment path so all carrier rules and restrictions apply |Requirements Summary, Solution Overview, Solution Architecture
+|FR-4 |Keep party members seated together when the request mentions companions on the same PNR |Requirements Summary, Solution Overview, Solution Architecture
+|CON-1 |Seat assignment must go through the existing seat assignment service; no direct seat map writes |Requirements Summary
+|NFR-1 |Candidate seats returned within p95 1.5 s (target: p95 1.5 s) |Requirements Summary, Non-Functional Design
+|NFR-2 |99.9% availability during check-in windows (target: 99.9%) |Requirements Summary, Non-Functional Design
+|NFR-3 |No personal data sent to external model providers beyond the request text |Requirements Summary, Non-Functional Design
+|===
+
+[appendix]
+== Evidence
+
+Cited 6 of 15 retrieved items. Revision is the source commit/version at retrieval time.
+
+* [[EV-1,EV-1]]*EV-1* ADR-0007: Seat availability read model › Consequences (adr, local-kb) - `kb/adr/adr-0007-seat-read-model.md#consequences`
+* [[EV-2,EV-2]]*EV-2* Seat Assignment Service - HLD (approved) › Interfaces (hld, local-kb) - `kb/hld/seat-assignment-service-hld.adoc#interfaces`
+* [[EV-6,EV-6]]*EV-6* Seat Assignment Service - HLD (approved) › Deployment (hld, local-kb) - `kb/hld/seat-assignment-service-hld.adoc#deployment`
+* [[EV-7,EV-7]]*EV-7* API Security Standard › Personal data (standard, local-kb) - `kb/standards/security-standard.adoc#personal-data`
+* [[EV-8,EV-8]]*EV-8* Platform Resilience Standard › Idempotency (standard, local-kb) - `kb/standards/resilience-standard.adoc#idempotency`
+* [[EV-12,EV-12]]*EV-12* SeatAssignmentService.assignSeat (code, stratum) - `repo://dcs-seat/src/main/java/com/dcs/seat/SeatAssignmentService.java#L40` @ `9f3c2ab`

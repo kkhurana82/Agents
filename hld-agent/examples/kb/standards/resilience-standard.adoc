@@ -1,0 +1,12 @@
+= Platform Resilience Standard
+
+== Timeouts and retries
+Every synchronous call sets an explicit timeout. Retries use exponential backoff with jitter, at most 3 attempts,
+and only for idempotent operations. Retry wraps circuit breaker, which wraps the time limiter (resilience4j order).
+
+== Circuit breakers
+Downstream calls to systems of record use a circuit breaker with a fallback that degrades functionality
+rather than failing the user journey.
+
+== Idempotency
+Commands that change state carry an idempotency key; consumers de-duplicate on that key for 24 hours.
