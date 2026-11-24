@@ -1,0 +1,34 @@
+{
+  "name": "ekp-interface",
+  "type": "record",
+  "recordFields": [
+    {
+      "index": 1,
+      "name": "protocol",
+      "type": "string",
+      "annotations": {
+        "displayName": "Protocol",
+        "description": "protocol",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 2,
+      "name": "direction",
+      "type": "string",
+      "annotations": {
+        "displayName": "Direction",
+        "description": "direction",
+        "search": {
+          "retrievable": true
+        }
+      }
+    }
+  ],
+  "annotations": {
+    "displayName": "EKP Interface",
+    "description": "Filterable fields for interface concepts."
+  }
+}

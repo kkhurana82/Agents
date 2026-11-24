@@ -1,0 +1,32 @@
+# Fields of the ekp-core aspect, attached to EVERY concept from EVERY build.
+# This is the uniform surface the retrieval router filters on.
+#
+#   required: true       -> every concept
+#   required: knowledge  -> knowledge types only (registry anchors are exempt)
+#   derived: true        -> computed by the emitter, never hand-authored; the
+#                           gate recomputes it and fails on a mismatch
+#   filter: true         -> scalar the router uses in searchEntries predicates
+core_fields:
+  concept_id:         {type: string,   required: true,      filter: true, doc: "Global stable ID: <entry_group>:<entry_id>"}
+  concept_type:       {type: string,   required: true,      filter: true, doc: "Canonical ontology type (OKF `type` carries the label)"}
+  lifecycle:          {type: string,   required: true,      filter: true, vocab: lifecycle, derived: true, doc: "Mirror of OKF status; kcmd's native layout keeps status only in the body"}
+  domain:             {type: string,   required: true,      filter: true, vocab: domains}
+  primary_system:     {type: string,   required: knowledge, filter: true, anchor_kind: system}
+  primary_component:  {type: string,   required: false,     filter: true, anchor_kind: component}
+  primary_capability: {type: string,   required: false,     filter: true, anchor_kind: capability}
+  source_kind:        {type: string,   required: true,      filter: true, vocab: source_kinds}
+  source_system:      {type: string,   required: true,      filter: true}
+  source_ref:         {type: string,   required: true,      filter: true, doc: "Source identity the entry ID is derived from (no revision)"}
+  source_revision:    {type: string,   required: true,      doc: "Commit SHA / page version / Jira updated timestamp"}
+  source_url:         {type: string,   required: false}
+  extraction:         {type: string,   required: true,      filter: true, vocab: extraction_methods}
+  confidence:         {type: double,   required: false,     doc: "Classification/extraction confidence; required when extraction is llm"}
+  trust_tier:         {type: string,   required: true,      filter: true, vocab: trust_tiers, derived: true}
+  valid_from:         {type: datetime, required: true,      filter: true, doc: "When this knowledge became true at the source"}
+  valid_to:           {type: datetime, required: false,     filter: true, doc: "Set when deprecated; closes the temporal interval"}
+  owner_team:         {type: string,   required: true,      filter: true, pattern: owner_team}
+  build_id:           {type: string,   required: true,      filter: true, pattern: build_id}
+  profile:            {type: string,   required: true,      doc: "<profile>@<version> that produced it"}
+  ontology_version:   {type: string,   required: true}
+  anchors:            {type: string_array,   required: knowledge, doc: "All anchor IDs; the primary_* scalars are the filterable subset"}
+  relations:          {type: relation_array, required: false, doc: "Typed edges {rel, target}; target is a concept_id or anchor ID"}

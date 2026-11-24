@@ -1,0 +1,34 @@
+{
+  "name": "ekp-decision",
+  "type": "record",
+  "recordFields": [
+    {
+      "index": 1,
+      "name": "decision_status",
+      "type": "string",
+      "annotations": {
+        "displayName": "Decision Status",
+        "description": "decision_status",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 2,
+      "name": "decided_on",
+      "type": "datetime",
+      "annotations": {
+        "displayName": "Decided On",
+        "description": "decided_on",
+        "search": {
+          "retrievable": true
+        }
+      }
+    }
+  ],
+  "annotations": {
+    "displayName": "EKP Decision",
+    "description": "Filterable fields for decision concepts."
+  }
+}

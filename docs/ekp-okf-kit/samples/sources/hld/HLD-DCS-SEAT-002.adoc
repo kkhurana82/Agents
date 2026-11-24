@@ -1,0 +1,25 @@
+= HLD: Seat Assignment Modernisation
+:doc-id: HLD-DCS-SEAT-002
+:system: system:dcs
+:component: component:dcs.seat-assignment
+// SYNTHETIC SAMPLE written from the HLD AsciiDoc template.
+
+[[ctx-overview]]
+== Context
+Seat eligibility checks are hard-coded in seatalloc C functions and are hard
+to change without a release.
+
+[[dec-seat-eligibility-rules-table]]
+=== Decision: seat eligibility rules move to a rules table
+Status:: Accepted (2026-08-20)
+Context:: Eligibility checks such as infant-in-exit-row are coded per function.
+Decision:: Express seat eligibility rules as rows in the modernised seat
+service's rules table. Legacy C checks stay authoritative until cut-over.
+Consequences:: Rules become data with owners and effective dates; every legacy
+rule needs a one-to-one migration and parity test.
+
+[[des-seat-eligibility-service]]
+=== Design: seat eligibility evaluation
+The seat service loads active rules for the flight, evaluates them per
+passenger-seat pair and returns the first reject reason. Infant, exit-row and
+cabin rules are evaluated before price rules.

@@ -1,0 +1,50 @@
+# Source profile: HLDs and architecture documents written from the AsciiDoc
+# HLD template. The template does the classification: each template section
+# maps to one concept type, so no LLM is needed for the type decision.
+profile: arch-doc
+version: 1
+source_kind: arch_doc
+source_systems: [git, confluence, sharepoint]
+entry_group_regex: '^hld-[a-z0-9-]+$'
+
+classification:
+  # Template section (by AsciiDoc section ID prefix) -> type.
+  # Section IDs come from the template ([[dec-...]], [[des-...]]), so they are
+  # stable across edits to the heading text.
+  template_sections:
+    "dec-*": Decision
+    "des-*": Design
+    "ifc-*": Interface
+    "nfr-*": Requirement
+    "glo-*": registry-candidate   # glossary entries go to the registry review queue
+    "ctx-*": skip                 # context prose stays in the source document
+  non_template_section: Unclassified
+
+anchor_resolution:
+  - "document attribute :system: and :component: -> anchors (must be canonical IDs)"
+  - "registry alias match in section title and body"
+
+emits:
+  Decision:
+    path_regex:       '^decisions/(?P<doc>[A-Z][A-Z0-9-]+)/(?P<section>dec-[a-z0-9-]+)$'
+    source_ref_regex: '^hld:(?P<doc>[A-Z][A-Z0-9-]+)#(?P<section>dec-[a-z0-9-]+)$'
+    extraction: [template, llm]
+  Design:
+    path_regex:       '^designs/(?P<doc>[A-Z][A-Z0-9-]+)/(?P<section>des-[a-z0-9-]+)$'
+    source_ref_regex: '^hld:(?P<doc>[A-Z][A-Z0-9-]+)#(?P<section>des-[a-z0-9-]+)$'
+    extraction: [template]
+  Interface:
+    path_regex:       '^interfaces/(?P<doc>[A-Z][A-Z0-9-]+)/(?P<section>ifc-[a-z0-9-]+)$'
+    source_ref_regex: '^hld:(?P<doc>[A-Z][A-Z0-9-]+)#(?P<section>ifc-[a-z0-9-]+)$'
+    extraction: [template]
+  Requirement:
+    path_regex:       '^requirements/(?P<doc>[A-Z][A-Z0-9-]+)/(?P<section>nfr-[a-z0-9-]+)$'
+    source_ref_regex: '^hld:(?P<doc>[A-Z][A-Z0-9-]+)#(?P<section>nfr-[a-z0-9-]+)$'
+    extraction: [template]
+  Unclassified:
+    path_regex:       '^unclassified/(?P<doc>[A-Z][A-Z0-9-]+)/(?P<section>[a-z0-9-]+)$'
+    source_ref_regex: '^hld:(?P<doc>[A-Z][A-Z0-9-]+)#(?P<section>[a-z0-9-]+)$'
+    extraction: [template, llm]
+
+policy:
+  min_confidence: 0.8       # applies only to llm-assisted extraction

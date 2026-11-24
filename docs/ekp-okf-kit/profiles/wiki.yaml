@@ -1,0 +1,53 @@
+# Source profile: Confluence wiki spaces.
+# Wiki is the noisiest source, so most pages are NOT concepts.
+# `path` templates let the adapter compute the entry ID once the type is known,
+# so an LLM choosing the type never chooses the ID.
+profile: wiki
+version: 1
+source_kind: wiki
+source_systems: [confluence]
+entry_group_regex: '^wiki-[a-z0-9-]+$'
+
+classification:            # deterministic signals first, LLM only as fallback
+  - when: "label runbook | how-to, or page under a 'Runbooks' parent"
+    emit: Procedure
+  - when: "label adr | decision, or Decision macro present"
+    emit: Decision
+  - when: "page under a 'Designs' parent"
+    emit: Design
+  - when: "meeting-notes template"
+    emit: "skip (only explicit decisions are extracted, as Decision with extraction llm)"
+  - when: "no signal"
+    emit: "LLM classifier, output constrained to [Procedure, Design, Decision]; below min_confidence -> Unclassified"
+
+anchor_resolution:
+  - "space key -> system (registry alias table)"
+  - "page labels -> component / capability (registry alias table)"
+  - "registry alias match in title and body"
+
+emits:
+  # IDs come from the Confluence page ID, never the page title: titles get
+  # renamed, page IDs do not.
+  Procedure:
+    path: "procedures/{space}/{page}"
+    path_regex:       '^procedures/(?P<space>[A-Z][A-Z0-9]+)/(?P<page>\d+)$'
+    source_ref_regex: '^confluence:(?P<space>[A-Z][A-Z0-9]+):(?P<page>\d+)$'
+    extraction: [deterministic, llm]
+  Design:
+    path: "designs/{space}/{page}"
+    path_regex:       '^designs/(?P<space>[A-Z][A-Z0-9]+)/(?P<page>\d+)$'
+    source_ref_regex: '^confluence:(?P<space>[A-Z][A-Z0-9]+):(?P<page>\d+)$'
+    extraction: [deterministic, llm]
+  Decision:
+    path: "decisions/{space}/{page}/d-{hash}"
+    path_regex:       '^decisions/(?P<space>[A-Z][A-Z0-9]+)/(?P<page>\d+)/d-(?P<hash>[0-9a-f]{6})$'
+    source_ref_regex: '^confluence:(?P<space>[A-Z][A-Z0-9]+):(?P<page>\d+)#d-(?P<hash>[0-9a-f]{6})$'
+    extraction: [deterministic, llm]
+  Unclassified:
+    path: "unclassified/{space}/{page}"
+    path_regex:       '^unclassified/(?P<space>[A-Z][A-Z0-9]+)/(?P<page>\d+)$'
+    source_ref_regex: '^confluence:(?P<space>[A-Z][A-Z0-9]+):(?P<page>\d+)$'
+    extraction: [llm]
+
+policy:
+  min_confidence: 0.8

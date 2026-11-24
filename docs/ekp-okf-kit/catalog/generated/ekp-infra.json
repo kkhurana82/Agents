@@ -1,0 +1,46 @@
+{
+  "name": "ekp-infra",
+  "type": "record",
+  "recordFields": [
+    {
+      "index": 1,
+      "name": "tool",
+      "type": "string",
+      "annotations": {
+        "displayName": "Tool",
+        "description": "tool",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 2,
+      "name": "provider",
+      "type": "string",
+      "annotations": {
+        "displayName": "Provider",
+        "description": "provider",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 3,
+      "name": "resource_kind",
+      "type": "string",
+      "annotations": {
+        "displayName": "Resource Kind",
+        "description": "resource_kind",
+        "search": {
+          "retrievable": true
+        }
+      }
+    }
+  ],
+  "annotations": {
+    "displayName": "EKP Infra",
+    "description": "Filterable fields for infra concepts."
+  }
+}

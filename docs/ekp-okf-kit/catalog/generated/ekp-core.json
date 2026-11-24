@@ -1,0 +1,344 @@
+{
+  "name": "ekp-core",
+  "type": "record",
+  "recordFields": [
+    {
+      "index": 1,
+      "name": "concept_id",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Concept Id",
+        "description": "Global stable ID: <entry_group>:<entry_id>",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 2,
+      "name": "concept_type",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Concept Type",
+        "description": "Canonical ontology type (OKF `type` carries the label)",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 3,
+      "name": "lifecycle",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Lifecycle",
+        "description": "Mirror of OKF status; kcmd's native layout keeps status only in the body",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 4,
+      "name": "domain",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Domain",
+        "description": "domain",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 5,
+      "name": "primary_system",
+      "type": "string",
+      "annotations": {
+        "displayName": "Primary System",
+        "description": "primary_system",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 6,
+      "name": "primary_component",
+      "type": "string",
+      "annotations": {
+        "displayName": "Primary Component",
+        "description": "primary_component",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 7,
+      "name": "primary_capability",
+      "type": "string",
+      "annotations": {
+        "displayName": "Primary Capability",
+        "description": "primary_capability",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 8,
+      "name": "source_kind",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Source Kind",
+        "description": "source_kind",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 9,
+      "name": "source_system",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Source System",
+        "description": "source_system",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 10,
+      "name": "source_ref",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Source Ref",
+        "description": "Source identity the entry ID is derived from (no revision)",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 11,
+      "name": "source_revision",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Source Revision",
+        "description": "Commit SHA / page version / Jira updated timestamp"
+      }
+    },
+    {
+      "index": 12,
+      "name": "source_url",
+      "type": "string",
+      "annotations": {
+        "displayName": "Source Url",
+        "description": "source_url"
+      }
+    },
+    {
+      "index": 13,
+      "name": "extraction",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Extraction",
+        "description": "extraction",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 14,
+      "name": "confidence",
+      "type": "double",
+      "annotations": {
+        "displayName": "Confidence",
+        "description": "Classification/extraction confidence; required when extraction is llm"
+      }
+    },
+    {
+      "index": 15,
+      "name": "trust_tier",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Trust Tier",
+        "description": "trust_tier",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 16,
+      "name": "valid_from",
+      "type": "datetime",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Valid From",
+        "description": "When this knowledge became true at the source",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 17,
+      "name": "valid_to",
+      "type": "datetime",
+      "annotations": {
+        "displayName": "Valid To",
+        "description": "Set when deprecated; closes the temporal interval",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 18,
+      "name": "owner_team",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Owner Team",
+        "description": "owner_team",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 19,
+      "name": "build_id",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Build Id",
+        "description": "build_id",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 20,
+      "name": "profile",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Profile",
+        "description": "<profile>@<version> that produced it"
+      }
+    },
+    {
+      "index": 21,
+      "name": "ontology_version",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "annotations": {
+        "displayName": "Ontology Version",
+        "description": "ontology_version"
+      }
+    },
+    {
+      "index": 22,
+      "name": "anchors",
+      "type": "array",
+      "arrayItems": {
+        "name": "item",
+        "type": "string"
+      },
+      "annotations": {
+        "displayName": "Anchors",
+        "description": "All anchor IDs; the primary_* scalars are the filterable subset"
+      }
+    },
+    {
+      "index": 23,
+      "name": "relations",
+      "type": "array",
+      "arrayItems": {
+        "name": "relation",
+        "type": "record",
+        "recordFields": [
+          {
+            "index": 1,
+            "name": "rel",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "annotations": {
+              "displayName": "Relation",
+              "description": "Relation kind from ontology/types.yaml"
+            }
+          },
+          {
+            "index": 2,
+            "name": "target",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "annotations": {
+              "displayName": "Target",
+              "description": "Target concept_id"
+            }
+          }
+        ]
+      },
+      "annotations": {
+        "displayName": "Relations",
+        "description": "Typed edges {rel, target}; target is a concept_id or anchor ID"
+      }
+    }
+  ],
+  "annotations": {
+    "displayName": "EKP Core",
+    "description": "Uniform filter surface for every EKP concept (ontology 1.1)."
+  }
+}

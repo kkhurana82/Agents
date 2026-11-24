@@ -1,0 +1,32 @@
+# Source profile: the anchor registry. The only build allowed to emit anchor
+# types. Source of truth is anchors/registry.yaml, changed by pull request.
+profile: registry
+version: 1
+source_kind: registry
+source_systems: [git]
+entry_group_regex: '^ekp-registry$'
+
+emits:
+  Domain:
+    path_regex:       '^anchors/domain/(?P<id>[a-z0-9.-]+)$'
+    source_ref_regex: '^registry:domain:(?P<id>[a-z0-9.-]+)$'
+    extraction: [human]
+  System:
+    path_regex:       '^anchors/system/(?P<id>[a-z0-9.-]+)$'
+    source_ref_regex: '^registry:system:(?P<id>[a-z0-9.-]+)$'
+    extraction: [human]
+  Component:
+    path_regex:       '^anchors/component/(?P<id>[a-z0-9.-]+)$'
+    source_ref_regex: '^registry:component:(?P<id>[a-z0-9.-]+)$'
+    extraction: [human]
+  Capability:
+    path_regex:       '^anchors/capability/(?P<id>[a-z0-9.-]+)$'
+    source_ref_regex: '^registry:capability:(?P<id>[a-z0-9.-]+)$'
+    extraction: [human]
+  Term:
+    path_regex:       '^anchors/term/(?P<id>[a-z0-9.-]+)$'
+    source_ref_regex: '^registry:term:(?P<id>[a-z0-9.-]+)$'
+    extraction: [human]
+
+policy:
+  min_confidence: null

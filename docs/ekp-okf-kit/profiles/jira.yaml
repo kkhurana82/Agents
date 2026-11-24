@@ -1,0 +1,39 @@
+# Source profile: Jira.
+# Tickets are events, not durable knowledge. Only epics/features become
+# concepts (Change). Stories, tasks and bugs become `sources` on their epic's
+# Change; ticket-level questions go to Jira live, not the catalog.
+profile: jira
+version: 1
+source_kind: jira
+source_systems: [jira]
+entry_group_regex: '^jira-[a-z0-9-]+$'
+
+classification:
+  - when: "issue type Epic | Feature"
+    emit: Change
+  - when: "issue type Story | Task | Bug | Sub-task"
+    emit: "evidence -> sources[] of the parent epic's Change (not a concept)"
+  - when: "comment states a decision (decided / agreed / we will ...)"
+    emit: Decision
+    extraction: llm
+  - when: "anything else"
+    emit: skip
+
+anchor_resolution:
+  - "Jira project key -> system (registry alias table)"
+  - "Jira component field -> component (registry alias table)"
+  - "labels -> capability / term (registry alias table)"
+
+emits:
+  # The Jira key is the identity. Never derive a path from the summary.
+  Change:
+    path_regex:       '^changes/(?P<key>[A-Z][A-Z0-9]+-\d+)$'
+    source_ref_regex: '^jira:(?P<key>[A-Z][A-Z0-9]+-\d+)$'
+    extraction: [deterministic]
+  Decision:
+    path_regex:       '^decisions/(?P<key>[A-Z][A-Z0-9]+-\d+)/c(?P<comment>\d+)$'
+    source_ref_regex: '^jira:(?P<key>[A-Z][A-Z0-9]+-\d+)#comment-(?P<comment>\d+)$'
+    extraction: [llm, human]
+
+policy:
+  min_confidence: 0.8

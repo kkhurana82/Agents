@@ -1,0 +1,34 @@
+{
+  "name": "ekp-rule",
+  "type": "record",
+  "recordFields": [
+    {
+      "index": 1,
+      "name": "rule_kind",
+      "type": "string",
+      "annotations": {
+        "displayName": "Rule Kind",
+        "description": "rule_kind",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 2,
+      "name": "enforcement",
+      "type": "string",
+      "annotations": {
+        "displayName": "Enforcement",
+        "description": "enforcement",
+        "search": {
+          "retrievable": true
+        }
+      }
+    }
+  ],
+  "annotations": {
+    "displayName": "EKP Rule",
+    "description": "Filterable fields for rule concepts."
+  }
+}

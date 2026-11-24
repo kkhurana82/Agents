@@ -1,0 +1,113 @@
+== pass 1: first builds ==
+build ekp-registry-20261124T180000Z  profile registry@1  entry group ekp-registry  concepts 7
+  => PASS: 0 error(s), 0 warning(s)
+
+build code-dcs-seat-20261124T180000Z  profile code-repo@2  entry group code-dcs-seat  concepts 3
+  rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743.md
+    WARN  REL005  'implements' target brd-seat:requirements/BRD-SEAT/BR-SEAT-014 not found in published manifests (other build not run yet, or a typo)
+    WARN  REL005  'governed_by' target hld-dcs-seat:decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table not found in published manifests (other build not run yet, or a typo)
+  golden recall@3: 1.00 over 2 question(s)
+  => PASS: 0 error(s), 2 warning(s)
+
+build code-seat-service-20261124T180000Z  profile code-repo@2  entry group code-seat-service  concepts 5
+  rules/src/main/resources/rules/seat-eligibility.yaml/INF_EXIT_ROW/eligibility-0945ef.md
+    WARN  REL005  'implements' target brd-seat:requirements/BRD-SEAT/BR-SEAT-014 not found in published manifests (other build not run yet, or a typo)
+    WARN  REL005  'governed_by' target hld-dcs-seat:decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table not found in published manifests (other build not run yet, or a typo)
+  golden recall@3: 1.00 over 2 question(s)
+  => PASS: 0 error(s), 2 warning(s)
+
+build hld-dcs-seat-20261124T180000Z  profile arch-doc@1  entry group hld-dcs-seat  concepts 2
+  golden recall@3: 1.00 over 1 question(s)
+  => PASS: 0 error(s), 0 warning(s)
+
+build brd-seat-20261124T180000Z  profile brd@1  entry group brd-seat  concepts 2
+  golden recall@3: 1.00 over 1 question(s)
+  => PASS: 0 error(s), 0 warning(s)
+
+build wiki-dcsops-20261124T180000Z  profile wiki@1  entry group wiki-dcsops  concepts 1
+  golden recall@3: 1.00 over 1 question(s)
+  => PASS: 0 error(s), 0 warning(s)
+
+build jira-seat-20261124T180000Z  profile jira@1  entry group jira-seat  concepts 2
+  golden recall@3: 1.00 over 1 question(s)
+  => PASS: 0 error(s), 0 warning(s)
+
+== pass 2: steady state (all cross-build targets published) ==
+build ekp-registry-20261124T180000Z  profile registry@1  entry group ekp-registry  concepts 7
+  => PASS: 0 error(s), 0 warning(s)
+
+build code-dcs-seat-20261124T180000Z  profile code-repo@2  entry group code-dcs-seat  concepts 3
+  golden recall@3: 1.00 over 2 question(s)
+  => PASS: 0 error(s), 0 warning(s)
+
+build code-seat-service-20261124T180000Z  profile code-repo@2  entry group code-seat-service  concepts 5
+  golden recall@3: 1.00 over 2 question(s)
+  => PASS: 0 error(s), 0 warning(s)
+
+build hld-dcs-seat-20261124T180000Z  profile arch-doc@1  entry group hld-dcs-seat  concepts 2
+  golden recall@3: 1.00 over 1 question(s)
+  => PASS: 0 error(s), 0 warning(s)
+
+build brd-seat-20261124T180000Z  profile brd@1  entry group brd-seat  concepts 2
+  golden recall@3: 1.00 over 1 question(s)
+  => PASS: 0 error(s), 0 warning(s)
+
+build wiki-dcsops-20261124T180000Z  profile wiki@1  entry group wiki-dcsops  concepts 1
+  golden recall@3: 1.00 over 1 question(s)
+  => PASS: 0 error(s), 0 warning(s)
+
+build jira-seat-20261124T180000Z  profile jira@1  entry group jira-seat  concepts 2
+  golden recall@3: 1.00 over 1 question(s)
+  => PASS: 0 error(s), 0 warning(s)
+
+== pass 3: next Jira run with defects ==
+build jira-seat-20261125T060000Z  profile jira@1  entry group jira-seat  concepts 3
+  changes/SEAT-401.md
+    ERROR LIF001  concept vanished since build jira-seat-20261124T180000Z: kcmd push would DELETE its entry. Keep the file with status: deprecated, valid_to, and superseded_by if it moved or was replaced.
+  changes/SEAT-412.md
+    ERROR DER003  trust_tier 'human_reviewed' but current `verified` events (at >= generated.at, OKF v0.3 §5.3) give 'unverified'
+    ERROR ANC001  anchor 'Seating' is an alias; use canonical 'component:dcs.seat-assignment'
+    ERROR ANC003  primary_component 'Seating' must be a component: anchor
+    ERROR HDR001  reader header out of sync with frontmatter (run header --fix)
+    WARN  LIF004  content changed but source_revision did not: non-deterministic emitter?
+  changes/kiosk-exit-row-recheck.md
+    ERROR ID001  entry ID 'changes/kiosk-exit-row-recheck' does not match ^changes/(?P<key>[A-Z][A-Z0-9]+-\d+)$ (IDs derive from source identity, never from titles)
+  decisions/SEAT-412/c88123.md
+    ERROR TRU003  unverified llm-extracted concept must be status: draft until verified
+  golden recall@3: 1.00 over 1 question(s)
+  => FAIL: 7 error(s), 1 warning(s)
+(exit 1 - non-zero blocks kcmd push)
+
+== pass 4: next HLD run, decision text changed since its human review ==
+build hld-dcs-seat-20261125T060000Z  profile arch-doc@1  entry group hld-dcs-seat  concepts 2
+  decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table.md
+    WARN  TRU007  was human_reviewed; content changed since the review, so the review is no longer current (OKF v0.3 §5.3). Route to the owner for re-review.
+  golden recall@3: 1.00 over 1 question(s)
+  => PASS: 0 error(s), 1 warning(s)
+(exit 0 - warnings do not block; the owner gets a re-review task)
+
+== pass 5: next wiki run, two unlabelled pages through the LLM lane ==
+[
+  {
+    "entry_id": "procedures/DCSOPS/48219911",
+    "type": "Procedure",
+    "model_type": "Procedure",
+    "confidence": 0.86,
+    "registry_candidates": [
+      "self-service kiosk"
+    ]
+  },
+  {
+    "entry_id": "unclassified/DCSOPS/48220450",
+    "type": "Unclassified",
+    "model_type": "Procedure",
+    "confidence": 0.41,
+    "registry_candidates": [
+      "kiosk vendor"
+    ]
+  }
+]
+build wiki-dcsops-20261125T010000Z  profile wiki@1  entry group wiki-dcsops  concepts 3
+  golden recall@3: 1.00 over 1 question(s)
+  => PASS: 0 error(s), 0 warning(s)
+(exit 0)

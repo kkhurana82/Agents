@@ -1,0 +1,58 @@
+{
+  "name": "ekp-requirement",
+  "type": "record",
+  "recordFields": [
+    {
+      "index": 1,
+      "name": "req_id",
+      "type": "string",
+      "annotations": {
+        "displayName": "Req Id",
+        "description": "req_id",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 2,
+      "name": "req_kind",
+      "type": "string",
+      "annotations": {
+        "displayName": "Req Kind",
+        "description": "req_kind",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 3,
+      "name": "priority",
+      "type": "string",
+      "annotations": {
+        "displayName": "Priority",
+        "description": "priority",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 4,
+      "name": "req_status",
+      "type": "string",
+      "annotations": {
+        "displayName": "Req Status",
+        "description": "req_status",
+        "search": {
+          "retrievable": true
+        }
+      }
+    }
+  ],
+  "annotations": {
+    "displayName": "EKP Requirement",
+    "description": "Filterable fields for requirement concepts."
+  }
+}

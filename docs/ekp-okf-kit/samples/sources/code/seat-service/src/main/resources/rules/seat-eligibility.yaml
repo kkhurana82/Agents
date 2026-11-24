@@ -1,0 +1,7 @@
+# SYNTHETIC SAMPLE. Seat eligibility rules as data (per HLD-DCS-SEAT-002).
+rules:
+  - id: INF_EXIT_ROW
+    when: { seat.exit_row: true, pax.infant_count: { gt: 0 } }
+    reject: INF_EXIT
+    owner: team:dcs-seating
+    effective_from: 2026-10-01

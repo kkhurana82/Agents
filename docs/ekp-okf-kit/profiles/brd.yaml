@@ -1,0 +1,36 @@
+# Source profile: business requirement documents.
+profile: brd
+version: 1
+source_kind: brd
+source_systems: [git, confluence, sharepoint]
+entry_group_regex: '^brd-[a-z0-9-]+$'
+
+classification:
+  - when: "numbered requirement (ID matches BR-<AREA>-<n> or NFR-<AREA>-<n>)"
+    emit: Requirement
+  - when: "requirement text states a condition the system must enforce"
+    emit: "BusinessRule (plus a `specifies` relation from the Requirement)"
+    extraction: llm
+  - when: "glossary / definitions table row"
+    emit: registry-candidate
+  - when: "anything else (background, scope, sign-off)"
+    emit: skip
+
+anchor_resolution:
+  - "document metadata (system, capability) -> anchors"
+  - "registry alias match in requirement text"
+
+emits:
+  Requirement:
+    path_regex:       '^requirements/(?P<doc>[A-Z][A-Z0-9-]+)/(?P<req>[A-Z]+-[A-Z]+-\d+)$'
+    source_ref_regex: '^brd:(?P<doc>[A-Z][A-Z0-9-]+)#(?P<req>[A-Z]+-[A-Z]+-\d+)$'
+    agree: {req: facet.req_id}
+    extraction: [template, human]
+  BusinessRule:
+    path_regex:       '^rules/(?P<doc>[A-Z][A-Z0-9-]+)/(?P<req>[A-Z]+-[A-Z]+-\d+)/(?P<kind>[a-z]+)-(?P<hash>[0-9a-f]{6})$'
+    source_ref_regex: '^brd:(?P<doc>[A-Z][A-Z0-9-]+)#(?P<req>[A-Z]+-[A-Z]+-\d+)/(?P<kind>[a-z]+)-(?P<hash>[0-9a-f]{6})$'
+    agree: {kind: facet.rule_kind}
+    extraction: [llm, human]
+
+policy:
+  min_confidence: 0.8

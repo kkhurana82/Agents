@@ -1,0 +1,16 @@
+{
+  "_note": "SYNTHETIC SAMPLE",
+  "key": "SEAT-412",
+  "issuetype": "Epic",
+  "project": "SEAT",
+  "summary": "Re-check exit-row eligibility when an infant is added after seat assignment",
+  "status": "Done",
+  "fixVersions": ["2026.10"],
+  "components": ["Seating"],
+  "labels": ["seat-eligibility"],
+  "updated": "2026-10-02T11:20:00Z",
+  "children": [
+    {"key": "SEAT-415", "issuetype": "Story", "summary": "Run exit-row infant check when an infant is added to a seated passenger"},
+    {"key": "SEAT-419", "issuetype": "Bug",   "summary": "Exit-row infant check skipped on kiosk seat change"}
+  ]
+}

@@ -1,0 +1,205 @@
+{
+  "data/seatalloc/seat_types.h/pax_t": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/code-dcs-seat/entries/data/seatalloc/seat_types.h/pax_t",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/code-dcs-seat/entries/data/seatalloc/seat_types.h",
+    "entrySource": {
+      "displayName": "pax_t passenger record",
+      "description": "Passenger record used by seat allocation; infant_count holds the number of lap infants."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "code-dcs-seat:data/seatalloc/seat_types.h/pax_t",
+          "concept_type": "DataEntity",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "source_kind": "code",
+          "source_system": "git",
+          "source_ref": "git:dcs-seat:seatalloc/seat_types.h#pax_t",
+          "source_revision": "9c1e2f7a4b0d",
+          "source_url": "https://git.example.com/dcs-seat/blob/9c1e2f7a4b0d/seatalloc/seat_types.h",
+          "extraction": "deterministic",
+          "trust_tier": "machine_confirmed",
+          "valid_from": "2026-09-14T08:00:00Z",
+          "owner_team": "team:dcs-seating",
+          "build_id": "code-dcs-seat-20261124T180000Z",
+          "profile": "code-repo@2",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment",
+            "term:infant"
+          ]
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "data-entity"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Data Entity** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `git:dcs-seat:seatalloc/seat_types.h#pax_t` @ `9c1e2f7a4b0d` · extraction: deterministic\n> **Trust:** machine_confirmed · **Status:** stable · **Valid from:** 2026-09-14\n> **Also about:** `term:infant`\n<!-- /ekp:header -->\n\n# Schema\n\n| Field | Type | Meaning |\n|---|---|---|\n| surname | char[32] | Passenger surname |\n| infant_count | short | Lap infants travelling with this passenger |\n| cabin | char | Booked cabin |\n\n## OKF Metadata\n\n```yaml\ntags:\n  - infant\nstatus: stable\ngenerated:\n  by: ekp-tpfc-extractor/0.4\n  at: 2026-09-14T08:00:00Z\nverified:\n  - by: process:ekp-rule-check\n    at: 2026-11-24T18:05:00Z\nsources:\n  - id: hdr\n    resource: https://git.example.com/dcs-seat/blob/9c1e2f7a4b0d/seatalloc/seat_types.h\n    title: seatalloc/seat_types.h\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "index": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/code-dcs-seat/entries/agents",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "entrySource": {
+      "displayName": "Code: dcs-seat (TPF C)",
+      "description": "Legacy seat allocation code: modules, seat eligibility rules and record layouts. Use it for how the legacy DCS enforces seat rules."
+    },
+    "aspects": {
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "knowledge-base"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n# Code: dcs-seat (TPF C)\n\n## Business Rule\n\n* [Infant passenger may not be assigned an exit-row seat](/rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743.md) - check_exit_row_infant rejects an exit-row seat (SEAT_REJ_INF_EXIT) when the passenger has a lap infant.\n\n## Data Entity\n\n* [pax_t passenger record](/data/seatalloc/seat_types.h/pax_t.md) - Passenger record used by seat allocation; infant_count holds the number of lap infants.\n\n## Module\n\n* [seatalloc/infant_rules.c](/modules/seatalloc/infant_rules.c.md) - Infant-related seat eligibility checks called during seat assignment.\n\n## OKF Metadata\n\n```yaml\nokf_version: \"0.3\"\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "modules/seatalloc/infant_rules.c": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/code-dcs-seat/entries/modules/seatalloc/infant_rules.c",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/code-dcs-seat/entries/modules/seatalloc",
+    "entrySource": {
+      "displayName": "seatalloc/infant_rules.c",
+      "description": "Infant-related seat eligibility checks called during seat assignment."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "code-dcs-seat:modules/seatalloc/infant_rules.c",
+          "concept_type": "Module",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "source_kind": "code",
+          "source_system": "git",
+          "source_ref": "git:dcs-seat:seatalloc/infant_rules.c",
+          "source_revision": "9c1e2f7a4b0d",
+          "source_url": "https://git.example.com/dcs-seat/blob/9c1e2f7a4b0d/seatalloc/infant_rules.c",
+          "extraction": "deterministic",
+          "trust_tier": "machine_confirmed",
+          "valid_from": "2026-09-14T08:00:00Z",
+          "owner_team": "team:dcs-seating",
+          "build_id": "code-dcs-seat-20261124T180000Z",
+          "profile": "code-repo@2",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment",
+            "term:infant"
+          ],
+          "relations": [
+            {
+              "rel": "enforces",
+              "target": "code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743"
+            },
+            {
+              "rel": "reads",
+              "target": "code-dcs-seat:data/seatalloc/seat_types.h/pax_t"
+            }
+          ]
+        }
+      },
+      "acme-ekp.us-central1.ekp-module": {
+        "data": {
+          "language": "tpf-c",
+          "module_kind": "program"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "module"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Module** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `git:dcs-seat:seatalloc/infant_rules.c` @ `9c1e2f7a4b0d` · extraction: deterministic\n> **Trust:** machine_confirmed · **Status:** stable · **Valid from:** 2026-09-14\n> **Also about:** `term:infant`\n> **Relations:** enforces `code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743`; reads `code-dcs-seat:data/seatalloc/seat_types.h/pax_t`\n<!-- /ekp:header -->\n\n# Purpose\n\nHolds infant-related seat eligibility checks. Seat assignment calls\n`check_exit_row_infant()` before committing a seat.\n\n# Functions\n\n* `check_exit_row_infant(pax, seat)` - rejects exit-row seats for passengers with infants.\n\n## OKF Metadata\n\n```yaml\ntags:\n  - seat-eligibility\n  - infant\nstatus: stable\ngenerated:\n  by: ekp-tpfc-extractor/0.4\n  at: 2026-09-14T08:00:00Z\nverified:\n  - by: process:ekp-rule-check\n    at: 2026-11-24T18:05:00Z\nsources:\n  - id: code\n    resource: https://git.example.com/dcs-seat/blob/9c1e2f7a4b0d/seatalloc/infant_rules.c\n    title: seatalloc/infant_rules.c\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/code-dcs-seat/entries/rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/code-dcs-seat/entries/rules/seatalloc/infant_rules.c/check_exit_row_infant",
+    "entrySource": {
+      "displayName": "Infant passenger may not be assigned an exit-row seat",
+      "description": "check_exit_row_infant rejects an exit-row seat (SEAT_REJ_INF_EXIT) when the passenger has a lap infant."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743",
+          "concept_type": "BusinessRule",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "primary_capability": "capability:seat-eligibility",
+          "source_kind": "code",
+          "source_system": "git",
+          "source_ref": "git:dcs-seat:seatalloc/infant_rules.c#check_exit_row_infant/eligibility-353743",
+          "source_revision": "9c1e2f7a4b0d",
+          "source_url": "https://git.example.com/dcs-seat/blob/9c1e2f7a4b0d/seatalloc/infant_rules.c#L9-L16",
+          "extraction": "deterministic",
+          "trust_tier": "machine_confirmed",
+          "valid_from": "2026-09-14T08:00:00Z",
+          "owner_team": "team:dcs-seating",
+          "build_id": "code-dcs-seat-20261124T180000Z",
+          "profile": "code-repo@2",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment",
+            "capability:seat-eligibility",
+            "term:infant",
+            "term:exit-row"
+          ],
+          "relations": [
+            {
+              "rel": "implements",
+              "target": "brd-seat:requirements/BRD-SEAT/BR-SEAT-014"
+            },
+            {
+              "rel": "governed_by",
+              "target": "hld-dcs-seat:decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table"
+            }
+          ]
+        }
+      },
+      "acme-ekp.us-central1.ekp-rule": {
+        "data": {
+          "rule_kind": "eligibility",
+          "enforcement": "code"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "business-rule"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Business Rule** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `git:dcs-seat:seatalloc/infant_rules.c#check_exit_row_infant/eligibility-353743` @ `9c1e2f7a4b0d` · extraction: deterministic\n> **Trust:** machine_confirmed · **Status:** stable · **Valid from:** 2026-09-14\n> **Also about:** `capability:seat-eligibility`, `term:infant`, `term:exit-row`\n> **Relations:** implements `brd-seat:requirements/BRD-SEAT/BR-SEAT-014`; governed by `hld-dcs-seat:decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table`\n<!-- /ekp:header -->\n\n# Rule\n\nIf the requested seat has `SEAT_ATTR_EXIT_ROW` set and the passenger's\n`infant_count` is greater than 0, seat assignment is rejected with\n`SEAT_REJ_INF_EXIT` (41).[^code]\n\n# Condition\n\n```c\nseat->attrs & SEAT_ATTR_EXIT_ROW && pax->infant_count > 0\n```\n\n# Where it runs\n\n`check_exit_row_infant()` in `seatalloc/infant_rules.c`, part of\n[the infant rules module](/modules/seatalloc/infant_rules.c.md).\n\n[^code]: seatalloc/infant_rules.c lines 9-16 at 9c1e2f7\n\n## OKF Metadata\n\n```yaml\ntags:\n  - seat-eligibility\n  - infant\n  - exit-row\nstatus: stable\ngenerated:\n  by: ekp-tpfc-extractor/0.4\n  at: 2026-09-14T08:00:00Z\nverified:\n  - by: process:ekp-rule-check\n    at: 2026-11-24T18:05:00Z\nsources:\n  - id: code\n    resource: https://git.example.com/dcs-seat/blob/9c1e2f7a4b0d/seatalloc/infant_rules.c#L9-L16\n    title: seatalloc/infant_rules.c\n    last_modified: 2026-09-14T08:00:00Z\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  }
+}

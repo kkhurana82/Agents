@@ -1,0 +1,48 @@
+# Anchor registry: canonical IDs every build must resolve to.
+# Synthetic sample content. Aliases are what adapters match on (repo names,
+# Jira project keys and components, Confluence spaces and labels, acronyms).
+# An alias used directly as an anchor in a concept is a build error: the gate
+# tells the build which canonical ID to use instead.
+registry_version: "1.0"
+
+anchors:
+  - id: domain:departure-control
+    title: Departure Control
+    description: Check-in, seating, boarding and flight close for departing flights.
+    aliases: [departure control, DC]
+
+  - id: system:dcs
+    title: Departure Control System
+    description: The system that runs check-in, seat assignment and boarding.
+    domain: domain:departure-control
+    aliases: [DCS, dcs-seat, DCSOPS, SEAT]
+
+  - id: component:dcs.seat-assignment
+    title: Seat Assignment
+    description: Allocates and changes seats, applying seat eligibility rules.
+    system: system:dcs
+    aliases: [seat assignment, seatalloc, seat-alloc, seat-service, SA, Seating]
+
+  - id: component:dcs.checkin
+    title: Check-in
+    description: Passenger check-in flow, including document and eligibility checks.
+    system: system:dcs
+    aliases: [check-in, checkin, CKI]
+
+  - id: capability:seat-eligibility
+    title: Seat eligibility
+    description: Deciding which passengers may occupy which seats.
+    system: system:dcs
+    aliases: [seat eligibility, seat restrictions]
+
+  - id: term:infant
+    title: Infant
+    description: A passenger under 2 years travelling on an adult's lap (INF).
+    domain: domain:departure-control
+    aliases: [INF, lap infant, infant]
+
+  - id: term:exit-row
+    title: Exit row
+    description: A seat row adjacent to an emergency exit, with occupant restrictions.
+    domain: domain:departure-control
+    aliases: [exit row, emergency exit row, EXIT]

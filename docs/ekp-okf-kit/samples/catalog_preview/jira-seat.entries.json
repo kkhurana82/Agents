@@ -1,0 +1,142 @@
+{
+  "changes/SEAT-401": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/jira-seat/entries/changes/SEAT-401",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/jira-seat/entries/changes",
+    "entrySource": {
+      "displayName": "SEAT-401: Show infant-restricted seats on the seat map",
+      "description": "Seat map greys out seats a passenger with an infant may not select."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "jira-seat:changes/SEAT-401",
+          "concept_type": "Change",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "primary_capability": "capability:seat-eligibility",
+          "source_kind": "jira",
+          "source_system": "jira",
+          "source_ref": "jira:SEAT-401",
+          "source_revision": "2026-10-02T11:20:00Z",
+          "source_url": "https://jira.example.com/browse/SEAT-401",
+          "extraction": "deterministic",
+          "trust_tier": "unverified",
+          "valid_from": "2026-10-02T11:20:00Z",
+          "owner_team": "team:dcs-seating",
+          "build_id": "jira-seat-20261124T180000Z",
+          "profile": "jira@1",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment",
+            "capability:seat-eligibility"
+          ],
+          "relations": []
+        }
+      },
+      "acme-ekp.us-central1.ekp-change": {
+        "data": {
+          "change_status": "done",
+          "release": "2026.09"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "change"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Change** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `jira:SEAT-401` @ `2026-10-02T11:20:00Z` · extraction: deterministic\n> **Trust:** unverified · **Status:** stable · **Valid from:** 2026-10-02\n> **Also about:** `capability:seat-eligibility`\n<!-- /ekp:header -->\n\n# Change\n\nSeat map greys out seats a passenger with an infant may not select.\n\n# Work items\n\n* SEAT-402 (Story): Grey out exit-row seats for passengers with infants\n\n## OKF Metadata\n\n```yaml\ntags:\n  - seat-eligibility\nstatus: stable\ngenerated:\n  by: ekp-jira-adapter/0.3\n  at: 2026-10-02T11:20:00Z\nsources:\n  - id: seat-401\n    resource: https://jira.example.com/browse/SEAT-401\n    title: SEAT-401\n  - id: seat-402\n    resource: https://jira.example.com/browse/SEAT-402\n    title: SEAT-402 Grey out exit-row seats for passengers with infants\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "changes/SEAT-412": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/jira-seat/entries/changes/SEAT-412",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/jira-seat/entries/changes",
+    "entrySource": {
+      "displayName": "SEAT-412: Re-check exit-row eligibility when an infant is added after seat assignment",
+      "description": "Exit-row infant check now re-runs when an infant is added to a seated passenger and on kiosk seat changes (release 2026.10)."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "jira-seat:changes/SEAT-412",
+          "concept_type": "Change",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "primary_capability": "capability:seat-eligibility",
+          "source_kind": "jira",
+          "source_system": "jira",
+          "source_ref": "jira:SEAT-412",
+          "source_revision": "2026-10-02T11:20:00Z",
+          "source_url": "https://jira.example.com/browse/SEAT-412",
+          "extraction": "deterministic",
+          "trust_tier": "unverified",
+          "valid_from": "2026-10-02T11:20:00Z",
+          "owner_team": "team:dcs-seating",
+          "build_id": "jira-seat-20261124T180000Z",
+          "profile": "jira@1",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment",
+            "capability:seat-eligibility"
+          ],
+          "relations": [
+            {
+              "rel": "changes",
+              "target": "code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743"
+            }
+          ]
+        }
+      },
+      "acme-ekp.us-central1.ekp-change": {
+        "data": {
+          "change_status": "done",
+          "release": "2026.10"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "change"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Change** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `jira:SEAT-412` @ `2026-10-02T11:20:00Z` · extraction: deterministic\n> **Trust:** unverified · **Status:** stable · **Valid from:** 2026-10-02\n> **Also about:** `capability:seat-eligibility`\n> **Relations:** changes `code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743`\n<!-- /ekp:header -->\n\n# Change\n\nExit-row infant check now re-runs when an infant is added to a seated passenger and on kiosk seat changes (release 2026.10).\n\n# Work items\n\n* SEAT-415 (Story): Run exit-row infant check when an infant is added to a seated passenger\n* SEAT-419 (Bug): Exit-row infant check skipped on kiosk seat change\n\n## OKF Metadata\n\n```yaml\ntags:\n  - seat-eligibility\nstatus: stable\ngenerated:\n  by: ekp-jira-adapter/0.3\n  at: 2026-10-02T11:20:00Z\nsources:\n  - id: seat-412\n    resource: https://jira.example.com/browse/SEAT-412\n    title: SEAT-412\n  - id: seat-415\n    resource: https://jira.example.com/browse/SEAT-415\n    title: SEAT-415 Run exit-row infant check when an infant is added to a seated\n      passenger\n  - id: seat-419\n    resource: https://jira.example.com/browse/SEAT-419\n    title: SEAT-419 Exit-row infant check skipped on kiosk seat change\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "index": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/jira-seat/entries/agents",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "entrySource": {
+      "displayName": "Jira: SEAT",
+      "description": "Seat epics: what changed, when and in which release. Use it for change history."
+    },
+    "aspects": {
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "knowledge-base"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n# Jira: SEAT\n\n## Change\n\n* [SEAT-401: Show infant-restricted seats on the seat map](/changes/SEAT-401.md) - Seat map greys out seats a passenger with an infant may not select.\n* [SEAT-412: Re-check exit-row eligibility when an infant is added after seat assignment](/changes/SEAT-412.md) - Exit-row infant check now re-runs when an infant is added to a seated passenger and on kiosk seat changes (release 2026.10).\n\n## OKF Metadata\n\n```yaml\nokf_version: \"0.3\"\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  }
+}

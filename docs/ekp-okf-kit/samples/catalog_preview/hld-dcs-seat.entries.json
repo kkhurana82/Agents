@@ -1,0 +1,138 @@
+{
+  "decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/hld-dcs-seat/entries/decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/hld-dcs-seat/entries/decisions/HLD-DCS-SEAT-002",
+    "entrySource": {
+      "displayName": "Seat eligibility rules move to a rules table",
+      "description": "Seat eligibility checks become rows in the modernised seat service's rules table; legacy C checks stay authoritative until cut-over."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "hld-dcs-seat:decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table",
+          "concept_type": "Decision",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "primary_capability": "capability:seat-eligibility",
+          "source_kind": "arch_doc",
+          "source_system": "git",
+          "source_ref": "hld:HLD-DCS-SEAT-002#dec-seat-eligibility-rules-table",
+          "source_revision": "a77d01c3e9f2",
+          "source_url": "https://git.example.com/arch-docs/blob/a77d01c/HLD-DCS-SEAT-002.adoc",
+          "extraction": "template",
+          "trust_tier": "human_reviewed",
+          "valid_from": "2026-08-20T00:00:00Z",
+          "owner_team": "team:dcs-architecture",
+          "build_id": "hld-dcs-seat-20261124T180000Z",
+          "profile": "arch-doc@1",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment",
+            "capability:seat-eligibility"
+          ]
+        }
+      },
+      "acme-ekp.us-central1.ekp-decision": {
+        "data": {
+          "decision_status": "accepted",
+          "decided_on": "2026-08-20T00:00:00Z"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "decision"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Decision** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `hld:HLD-DCS-SEAT-002#dec-seat-eligibility-rules-table` @ `a77d01c3e9f2` · extraction: template\n> **Trust:** human_reviewed · **Status:** stable · **Valid from:** 2026-08-20\n> **Also about:** `capability:seat-eligibility`\n<!-- /ekp:header -->\n\n# Decision\n\nExpress seat eligibility rules as rows in the modernised seat service's rules\ntable. Legacy C checks stay authoritative until cut-over.[^hld]\n\n# Context\n\nEligibility checks such as infant-in-exit-row are hard-coded per C function,\nso every change needs a release.\n\n# Consequences\n\nRules become data with owners and effective dates. Every legacy rule needs a\none-to-one migration and a parity test.\n\n[^hld]: HLD-DCS-SEAT-002, section dec-seat-eligibility-rules-table\n\n## OKF Metadata\n\n```yaml\ntags:\n  - seat-eligibility\n  - modernisation\nstatus: stable\ngenerated:\n  by: ekp-hld-adapter/0.2\n  at: 2026-08-20T00:00:00Z\nverified:\n  - by: human:arch-review-board\n    at: 2026-08-21T10:00:00Z\nsources:\n  - id: hld\n    resource: https://git.example.com/arch-docs/blob/a77d01c/HLD-DCS-SEAT-002.adoc\n    title: HLD-DCS-SEAT-002 Seat Assignment Modernisation\n    author: team:dcs-architecture\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "designs/HLD-DCS-SEAT-002/des-seat-eligibility-service": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/hld-dcs-seat/entries/designs/HLD-DCS-SEAT-002/des-seat-eligibility-service",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/hld-dcs-seat/entries/designs/HLD-DCS-SEAT-002",
+    "entrySource": {
+      "displayName": "Seat eligibility evaluation in the seat service",
+      "description": "The seat service evaluates active eligibility rules per passenger-seat pair and returns the first reject reason."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "hld-dcs-seat:designs/HLD-DCS-SEAT-002/des-seat-eligibility-service",
+          "concept_type": "Design",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "source_kind": "arch_doc",
+          "source_system": "git",
+          "source_ref": "hld:HLD-DCS-SEAT-002#des-seat-eligibility-service",
+          "source_revision": "a77d01c3e9f2",
+          "source_url": "https://git.example.com/arch-docs/blob/a77d01c/HLD-DCS-SEAT-002.adoc",
+          "extraction": "template",
+          "trust_tier": "unverified",
+          "valid_from": "2026-08-20T00:00:00Z",
+          "owner_team": "team:dcs-architecture",
+          "build_id": "hld-dcs-seat-20261124T180000Z",
+          "profile": "arch-doc@1",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment",
+            "capability:seat-eligibility"
+          ],
+          "relations": [
+            {
+              "rel": "governed_by",
+              "target": "hld-dcs-seat:decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table"
+            },
+            {
+              "rel": "describes",
+              "target": "code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743"
+            }
+          ]
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "design"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Design** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `hld:HLD-DCS-SEAT-002#des-seat-eligibility-service` @ `a77d01c3e9f2` · extraction: template\n> **Trust:** unverified · **Status:** stable · **Valid from:** 2026-08-20\n> **Also about:** `capability:seat-eligibility`\n> **Relations:** governed by `hld-dcs-seat:decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table`; describes `code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743`\n<!-- /ekp:header -->\n\n# Design\n\nThe seat service loads active rules for the flight, evaluates them per\npassenger-seat pair and returns the first reject reason. Infant, exit-row and\ncabin rules run before price rules.\n\n## OKF Metadata\n\n```yaml\ntags:\n  - seat-eligibility\nstatus: stable\ngenerated:\n  by: ekp-hld-adapter/0.2\n  at: 2026-08-20T00:00:00Z\nsources:\n  - id: hld\n    resource: https://git.example.com/arch-docs/blob/a77d01c/HLD-DCS-SEAT-002.adoc\n    title: HLD-DCS-SEAT-002 Seat Assignment Modernisation\n    author: team:dcs-architecture\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "index": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/hld-dcs-seat/entries/agents",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "entrySource": {
+      "displayName": "HLD: HLD-DCS-SEAT-002",
+      "description": "Seat assignment modernisation decisions and designs. Use it for why seat eligibility is moving to a rules table."
+    },
+    "aspects": {
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "knowledge-base"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n# HLD: HLD-DCS-SEAT-002\n\n## Decision\n\n* [Seat eligibility rules move to a rules table](/decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table.md) - Seat eligibility checks become rows in the modernised seat service's rules table; legacy C checks stay authoritative until cut-over.\n\n## Design\n\n* [Seat eligibility evaluation in the seat service](/designs/HLD-DCS-SEAT-002/des-seat-eligibility-service.md) - The seat service evaluates active eligibility rules per passenger-seat pair and returns the first reject reason.\n\n## OKF Metadata\n\n```yaml\nokf_version: \"0.3\"\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  }
+}

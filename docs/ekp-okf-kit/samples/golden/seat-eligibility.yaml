@@ -1,0 +1,27 @@
+# Golden questions for the seat-eligibility area. Each build is scored only on
+# the expectations that live in that build (see ekp_okf/recall.py).
+questions:
+  - q: Can a passenger travelling with an infant be seated in an exit row?
+    expect:
+      - code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743
+      - brd-seat:requirements/BRD-SEAT/BR-SEAT-014
+      - brd-seat:rules/BRD-SEAT/BR-SEAT-014/eligibility-3ade07
+  - q: Why are seat eligibility rules moving to a rules table?
+    expect:
+      - hld-dcs-seat:decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table
+  - q: What changed in the exit-row infant check in release 2026.10?
+    expect:
+      - jira-seat:changes/SEAT-412
+  - q: How does a gate agent reseat a passenger with an infant out of an exit row?
+    expect:
+      - wiki-dcsops:procedures/DCSOPS/48213907
+  - q: Which passenger record field holds the number of lap infants?
+    expect:
+      - code-dcs-seat:data/seatalloc/seat_types.h/pax_t
+  - q: Which rules-table row replaces the legacy infant exit-row check in the seat service?
+    expect:
+      - code-seat-service:rules/src/main/resources/rules/seat-eligibility.yaml/INF_EXIT_ROW/eligibility-0945ef
+  - q: Which Pub/Sub topic carries seat-assigned events and how is it provisioned?
+    expect:
+      - code-seat-service:infra/terraform/pubsub.tf/google_pubsub_topic.seat_assigned
+      - code-seat-service:interfaces/src/main/java/com/example/seat/EligibilityService.java/publishSeatAssigned

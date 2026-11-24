@@ -1,0 +1,154 @@
+{
+  "index": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/brd-seat/entries/agents",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "entrySource": {
+      "displayName": "BRD: BRD-SEAT",
+      "description": "Seat assignment business requirements and the rules they state. Use it for what the business requires."
+    },
+    "aspects": {
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "knowledge-base"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n# BRD: BRD-SEAT\n\n## Business Rule\n\n* [Exit-row seat rejected when passenger has an infant (as stated in BR-SEAT-014)](/rules/BRD-SEAT/BR-SEAT-014/eligibility-3ade07.md) - Business rule extracted from BR-SEAT-014: reject an exit-row seat if the passenger travels with an infant.\n\n## Requirement\n\n* [BR-SEAT-014: no exit-row seat for a passenger travelling with an infant](/requirements/BRD-SEAT/BR-SEAT-014.md) - The system shall not assign a seat in an exit row to a passenger travelling with an infant.\n\n## OKF Metadata\n\n```yaml\nokf_version: \"0.3\"\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "requirements/BRD-SEAT/BR-SEAT-014": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/brd-seat/entries/requirements/BRD-SEAT/BR-SEAT-014",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/brd-seat/entries/requirements/BRD-SEAT",
+    "entrySource": {
+      "displayName": "BR-SEAT-014: no exit-row seat for a passenger travelling with an infant",
+      "description": "The system shall not assign a seat in an exit row to a passenger travelling with an infant."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "brd-seat:requirements/BRD-SEAT/BR-SEAT-014",
+          "concept_type": "Requirement",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "primary_capability": "capability:seat-eligibility",
+          "source_kind": "brd",
+          "source_system": "confluence",
+          "source_ref": "brd:BRD-SEAT#BR-SEAT-014",
+          "source_revision": "v12",
+          "source_url": "https://wiki.example.com/display/BRD/BRD-SEAT",
+          "extraction": "template",
+          "trust_tier": "human_reviewed",
+          "valid_from": "2026-03-02T00:00:00Z",
+          "owner_team": "team:dcs-product",
+          "build_id": "brd-seat-20261124T180000Z",
+          "profile": "brd@1",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment",
+            "capability:seat-eligibility",
+            "term:infant",
+            "term:exit-row"
+          ],
+          "relations": [
+            {
+              "rel": "specifies",
+              "target": "brd-seat:rules/BRD-SEAT/BR-SEAT-014/eligibility-3ade07"
+            }
+          ]
+        }
+      },
+      "acme-ekp.us-central1.ekp-requirement": {
+        "data": {
+          "req_id": "BR-SEAT-014",
+          "req_kind": "functional",
+          "priority": "must",
+          "req_status": "implemented"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "requirement"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Requirement** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `brd:BRD-SEAT#BR-SEAT-014` @ `v12` · extraction: template\n> **Trust:** human_reviewed · **Status:** stable · **Valid from:** 2026-03-02\n> **Also about:** `capability:seat-eligibility`, `term:infant`, `term:exit-row`\n> **Relations:** specifies `brd-seat:rules/BRD-SEAT/BR-SEAT-014/eligibility-3ade07`\n<!-- /ekp:header -->\n\n# Requirement\n\nThe system shall not assign a seat in an exit row to a passenger travelling\nwith an infant.[^brd]\n\n| Priority | Status |\n|---|---|\n| Must | Implemented |\n\n[^brd]: BRD-SEAT section 4, row BR-SEAT-014\n\n## OKF Metadata\n\n```yaml\ntags:\n  - seat-eligibility\n  - infant\n  - exit-row\nstatus: stable\ngenerated:\n  by: ekp-brd-adapter/0.3\n  at: 2026-03-02T00:00:00Z\nverified:\n  - by: human:ba-signoff\n    at: 2026-03-05T09:00:00Z\nsources:\n  - id: brd\n    resource: https://wiki.example.com/display/BRD/BRD-SEAT\n    title: BRD-SEAT Seat Assignment\n    author: team:dcs-product\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "rules/BRD-SEAT/BR-SEAT-014/eligibility-3ade07": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/brd-seat/entries/rules/BRD-SEAT/BR-SEAT-014/eligibility-3ade07",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/brd-seat/entries/rules/BRD-SEAT/BR-SEAT-014",
+    "entrySource": {
+      "displayName": "Exit-row seat rejected when passenger has an infant (as stated in BR-SEAT-014)",
+      "description": "Business rule extracted from BR-SEAT-014: reject an exit-row seat if the passenger travels with an infant."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "brd-seat:rules/BRD-SEAT/BR-SEAT-014/eligibility-3ade07",
+          "concept_type": "BusinessRule",
+          "lifecycle": "draft",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "primary_capability": "capability:seat-eligibility",
+          "source_kind": "brd",
+          "source_system": "confluence",
+          "source_ref": "brd:BRD-SEAT#BR-SEAT-014/eligibility-3ade07",
+          "source_revision": "v12",
+          "source_url": "https://wiki.example.com/display/BRD/BRD-SEAT",
+          "extraction": "llm",
+          "confidence": 0.91,
+          "trust_tier": "unverified",
+          "valid_from": "2026-03-02T00:00:00Z",
+          "owner_team": "team:dcs-product",
+          "build_id": "brd-seat-20261124T180000Z",
+          "profile": "brd@1",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment",
+            "capability:seat-eligibility",
+            "term:infant",
+            "term:exit-row"
+          ],
+          "relations": [
+            {
+              "rel": "same_as",
+              "target": "code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743"
+            }
+          ]
+        }
+      },
+      "acme-ekp.us-central1.ekp-rule": {
+        "data": {
+          "rule_kind": "eligibility",
+          "enforcement": "unknown"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "business-rule"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Business Rule** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `brd:BRD-SEAT#BR-SEAT-014/eligibility-3ade07` @ `v12` · extraction: llm (0.91)\n> **Trust:** unverified · **Status:** draft · **Valid from:** 2026-03-02\n> **Also about:** `capability:seat-eligibility`, `term:infant`, `term:exit-row`\n> **Relations:** same as `code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743`\n<!-- /ekp:header -->\n\n# Rule\n\nReject an exit-row seat when the passenger travels with an infant.\n\n```text\nexit_row(seat) and infant_count(pax) > 0 => reject\n```\n\n## OKF Metadata\n\n```yaml\ntags:\n  - seat-eligibility\n  - infant\n  - exit-row\nstatus: draft\ngenerated:\n  by: ekp-brd-adapter/0.3+gemini-2.5-pro\n  at: 2026-11-24T18:00:00Z\nsources:\n  - id: brd\n    resource: https://wiki.example.com/display/BRD/BRD-SEAT\n    title: BRD-SEAT Seat Assignment\n    author: team:dcs-product\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  }
+}

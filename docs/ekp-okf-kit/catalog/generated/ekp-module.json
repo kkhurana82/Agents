@@ -1,0 +1,34 @@
+{
+  "name": "ekp-module",
+  "type": "record",
+  "recordFields": [
+    {
+      "index": 1,
+      "name": "language",
+      "type": "string",
+      "annotations": {
+        "displayName": "Language",
+        "description": "language",
+        "search": {
+          "retrievable": true
+        }
+      }
+    },
+    {
+      "index": 2,
+      "name": "module_kind",
+      "type": "string",
+      "annotations": {
+        "displayName": "Module Kind",
+        "description": "module_kind",
+        "search": {
+          "retrievable": true
+        }
+      }
+    }
+  ],
+  "annotations": {
+    "displayName": "EKP Module",
+    "description": "Filterable fields for module concepts."
+  }
+}

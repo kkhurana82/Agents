@@ -1,0 +1,11 @@
+# SYNTHETIC SAMPLE
+openapi: 3.0.3
+info: { title: Seat API, version: 1.4.0 }
+paths:
+  /passengers/{paxId}/seat:
+    put:
+      operationId: assignSeat
+      summary: Assign a seat; rejects with INF_EXIT for an infant in an exit row.
+      responses:
+        "200": { description: Seat assigned }
+        "422": { description: Seat not allowed (reason code, e.g. INF_EXIT) }

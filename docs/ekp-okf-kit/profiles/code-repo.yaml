@@ -1,0 +1,85 @@
+# Source profile: any code repository in the enterprise - application code in
+# any language, legacy (TPF C, HLASM, COBOL), API specs, schemas, rule tables,
+# infrastructure as code. One profile, many extractors.
+#
+# A repo is scanned by EVERY extractor whose `detect` matches, so a monorepo
+# (Java service + OpenAPI + Terraform) produces all its concept kinds in one
+# build. Language-specific knowledge lives in the extractors, never in the
+# contract: every extractor emits the same ontology types through emit_concept().
+#
+# Architecture docs that live in a code repo (docs/*.adoc, docs/adr/*.md) run as
+# a separate arch-doc build over the same repo, into their own entry group.
+profile: code-repo
+version: 2
+source_kind: code
+source_systems: [git]
+# One entry group per build. kcmd's native OKF push deletes remote entries
+# that are not in the local bundle, so two builds sharing a group would delete
+# each other's concepts.
+entry_group_regex: '^code-[a-z0-9-]+$'
+
+extractors:                 # what the adapter runs; the gate checks the output, not this list
+  - name: app-code
+    detect: [pom.xml, build.gradle*, package.json, go.mod, pyproject.toml, "*.csproj", Cargo.toml]
+    how: tree-sitter (or the language's own compiler API) + a per-language rule catalogue
+    emits: [Module, Interface, BusinessRule, DataEntity]
+  - name: legacy-code
+    detect: ["*.c with TPF headers", "*.asm / *.hlasm", "*.cbl"]
+    how: tree-sitter C + macro/DSECT/ENTER-BACK rules; HLASM and COBOL parsers
+    emits: [Module, Interface, BusinessRule, DataEntity]
+  - name: api-spec
+    detect: ["openapi*.y*ml", "*.proto", "asyncapi*.y*ml", "*.graphql"]
+    how: parse the spec; one Interface per operation / rpc / channel message
+    emits: [Interface, DataEntity]
+  - name: data-schema
+    detect: ["*.sql (DDL)", dbt_project.yml, "*.avsc"]
+    how: SQL parser (e.g. sqlglot), dbt manifest.json, Avro schema
+    emits: [DataEntity]
+  - name: rules-config
+    detect: ["rules/**/*.y*ml", "rules/**/*.csv", decision tables]
+    how: read rows; one BusinessRule per rule ID, enforcement=config
+    emits: [BusinessRule]
+  - name: terraform
+    detect: ["*.tf"]
+    how: "terraform-config-inspect or terraform show -json, not tree-sitter (HCL semantics)"
+    emits: [InfraResource]
+  - name: k8s-helm
+    detect: [Chart.yaml, "k8s/**/*.y*ml", kustomization.yaml]
+    how: "helm template or kustomize build, then one InfraResource per object"
+    emits: [InfraResource]
+
+anchor_resolution:          # deterministic signals, in order
+  - "repo name / CODEOWNERS team -> system (registry alias table)"
+  - "directory, package or module name -> component (registry alias table)"
+  - "identifiers and resource names matching registry term aliases -> term"
+
+# `symbol` is a class.method, function, operationId, rule ID, schema name or
+# resource address. It never contains '/', so the last path segment is the symbol.
+emits:
+  Module:
+    path_regex:       '^modules/(?P<file>[\w/.-]+)$'
+    source_ref_regex: '^git:(?P<repo>[\w.-]+):(?P<file>[\w/.-]+)$'
+    extraction: [deterministic]
+  BusinessRule:
+    # Rule ID ends in a hash of the normalised condition (code) or rule row
+    # (config): it survives line moves and changes only when the logic changes.
+    path_regex:       '^rules/(?P<file>[\w/.-]+)/(?P<symbol>[\w.$-]+)/(?P<kind>[a-z]+)-(?P<hash>[0-9a-f]{6})$'
+    source_ref_regex: '^git:(?P<repo>[\w.-]+):(?P<file>[\w/.-]+)#(?P<symbol>[\w.$-]+)/(?P<kind>[a-z]+)-(?P<hash>[0-9a-f]{6})$'
+    agree: {kind: facet.rule_kind}
+    extraction: [deterministic]
+  DataEntity:
+    path_regex:       '^data/(?P<file>[\w/.-]+)/(?P<symbol>[\w.$-]+)$'
+    source_ref_regex: '^git:(?P<repo>[\w.-]+):(?P<file>[\w/.-]+)#(?P<symbol>[\w.$-]+)$'
+    extraction: [deterministic]
+  Interface:
+    path_regex:       '^interfaces/(?P<file>[\w/.-]+)/(?P<symbol>[\w.$-]+)$'
+    source_ref_regex: '^git:(?P<repo>[\w.-]+):(?P<file>[\w/.-]+)#(?P<symbol>[\w.$-]+)$'
+    extraction: [deterministic]
+  InfraResource:
+    path_regex:       '^infra/(?P<file>[\w/.-]+)/(?P<symbol>[\w.$-]+)$'
+    source_ref_regex: '^git:(?P<repo>[\w.-]+):(?P<file>[\w/.-]+)#(?P<symbol>[\w.$-]+)$'
+    agree: {}
+    extraction: [deterministic]
+
+policy:
+  min_confidence: null      # deterministic only

@@ -1,0 +1,328 @@
+{
+  "index": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/code-seat-service/entries/agents",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "entrySource": {
+      "displayName": "Code: seat-service (Java, OpenAPI, Terraform)",
+      "description": "Modernised seat service: rules table, REST API, events and the GCP resources behind them. Use it for how the new seat service works and is deployed."
+    },
+    "aspects": {
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "knowledge-base"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n# Code: seat-service (Java, OpenAPI, Terraform)\n\n## Business Rule\n\n* [INF_EXIT_ROW: infant passenger may not take an exit-row seat (rules table)](/rules/src/main/resources/rules/seat-eligibility.yaml/INF_EXIT_ROW/eligibility-0945ef.md) - Rules-table row INF_EXIT_ROW rejects an exit-row seat with INF_EXIT when the passenger has a lap infant.\n\n## Infra Resource\n\n* [Pub/Sub topic seat-assigned](/infra/terraform/pubsub.tf/google_pubsub_topic.seat_assigned.md) - Terraform-managed GCP Pub/Sub topic that carries seat-assigned events, retained for one day.\n\n## Interface\n\n* [PUT /passengers/{paxId}/seat (assignSeat)](/interfaces/api/seat-api.yaml/assignSeat.md) - REST operation that assigns a seat or returns 422 with a reason code such as INF_EXIT.\n* [seat-assigned event (publishSeatAssigned)](/interfaces/src/main/java/com/example/seat/EligibilityService.java/publishSeatAssigned.md) - Event published to Pub/Sub topic seat-assigned after a seat is assigned.\n\n## Module\n\n* [EligibilityService (seat service)](/modules/src/main/java/com/example/seat/EligibilityService.java.md) - Spring service that evaluates the seat rules table and publishes seat-assigned events.\n\n## OKF Metadata\n\n```yaml\nokf_version: \"0.3\"\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "infra/terraform/pubsub.tf/google_pubsub_topic.seat_assigned": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/code-seat-service/entries/infra/terraform/pubsub.tf/google_pubsub_topic.seat_assigned",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/code-seat-service/entries/infra/terraform/pubsub.tf",
+    "entrySource": {
+      "displayName": "Pub/Sub topic seat-assigned",
+      "description": "Terraform-managed GCP Pub/Sub topic that carries seat-assigned events, retained for one day."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "code-seat-service:infra/terraform/pubsub.tf/google_pubsub_topic.seat_assigned",
+          "concept_type": "InfraResource",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "source_kind": "code",
+          "source_system": "git",
+          "source_ref": "git:seat-service:terraform/pubsub.tf#google_pubsub_topic.seat_assigned",
+          "source_revision": "4be09a1c77d2",
+          "extraction": "deterministic",
+          "trust_tier": "unverified",
+          "valid_from": "2026-10-01T00:00:00Z",
+          "owner_team": "team:dcs-seating",
+          "build_id": "code-seat-service-20261124T180000Z",
+          "profile": "code-repo@2",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment"
+          ]
+        }
+      },
+      "acme-ekp.us-central1.ekp-infra": {
+        "data": {
+          "tool": "terraform",
+          "provider": "gcp",
+          "resource_kind": "google_pubsub_topic"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "infra-resource"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Infra Resource** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `git:seat-service:terraform/pubsub.tf#google_pubsub_topic.seat_assigned` @ `4be09a1c77d2` · extraction: deterministic\n> **Trust:** unverified · **Status:** stable · **Valid from:** 2026-10-01\n<!-- /ekp:header -->\n\n# Resource\n\n`google_pubsub_topic.seat_assigned` in `terraform/pubsub.tf`.\n\n| Attribute | Value |\n|---|---|\n| name | seat-assigned |\n| message_retention_duration | 86400s |\n| labels | system=dcs, component=seat-assignment |\n\n## OKF Metadata\n\n```yaml\nstatus: stable\ngenerated:\n  by: ekp-terraform-extractor/0.1\n  at: 2026-10-01T00:00:00Z\nsources:\n  - id: tf\n    resource: https://git.example.com/seat-service/blob/4be09a1c77d2/terraform/pubsub.tf\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "interfaces/api/seat-api.yaml/assignSeat": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/code-seat-service/entries/interfaces/api/seat-api.yaml/assignSeat",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/code-seat-service/entries/interfaces/api/seat-api.yaml",
+    "entrySource": {
+      "displayName": "PUT /passengers/{paxId}/seat (assignSeat)",
+      "description": "REST operation that assigns a seat or returns 422 with a reason code such as INF_EXIT."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "code-seat-service:interfaces/api/seat-api.yaml/assignSeat",
+          "concept_type": "Interface",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "source_kind": "code",
+          "source_system": "git",
+          "source_ref": "git:seat-service:api/seat-api.yaml#assignSeat",
+          "source_revision": "4be09a1c77d2",
+          "extraction": "deterministic",
+          "trust_tier": "unverified",
+          "valid_from": "2026-10-01T00:00:00Z",
+          "owner_team": "team:dcs-seating",
+          "build_id": "code-seat-service-20261124T180000Z",
+          "profile": "code-repo@2",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment"
+          ]
+        }
+      },
+      "acme-ekp.us-central1.ekp-interface": {
+        "data": {
+          "protocol": "rest",
+          "direction": "inbound"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "interface"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Interface** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `git:seat-service:api/seat-api.yaml#assignSeat` @ `4be09a1c77d2` · extraction: deterministic\n> **Trust:** unverified · **Status:** stable · **Valid from:** 2026-10-01\n<!-- /ekp:header -->\n\n# Contract\n\n`PUT /passengers/{paxId}/seat`, operationId `assignSeat`, Seat API 1.4.0.\n\n| Status | Meaning |\n|---|---|\n| 200 | Seat assigned |\n| 422 | Seat not allowed, with a reason code (for example `INF_EXIT`) |\n\n## OKF Metadata\n\n```yaml\ntags:\n  - seat-eligibility\nstatus: stable\ngenerated:\n  by: ekp-openapi-extractor/0.1\n  at: 2026-10-01T00:00:00Z\nsources:\n  - id: spec\n    resource: https://git.example.com/seat-service/blob/4be09a1c77d2/api/seat-api.yaml\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "interfaces/src/main/java/com/example/seat/EligibilityService.java/publishSeatAssigned": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/code-seat-service/entries/interfaces/src/main/java/com/example/seat/EligibilityService.java/publishSeatAssigned",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/code-seat-service/entries/interfaces/src/main/java/com/example/seat/EligibilityService.java",
+    "entrySource": {
+      "displayName": "seat-assigned event (publishSeatAssigned)",
+      "description": "Event published to Pub/Sub topic seat-assigned after a seat is assigned."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "code-seat-service:interfaces/src/main/java/com/example/seat/EligibilityService.java/publishSeatAssigned",
+          "concept_type": "Interface",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "source_kind": "code",
+          "source_system": "git",
+          "source_ref": "git:seat-service:src/main/java/com/example/seat/EligibilityService.java#publishSeatAssigned",
+          "source_revision": "4be09a1c77d2",
+          "extraction": "deterministic",
+          "trust_tier": "unverified",
+          "valid_from": "2026-10-01T00:00:00Z",
+          "owner_team": "team:dcs-seating",
+          "build_id": "code-seat-service-20261124T180000Z",
+          "profile": "code-repo@2",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment"
+          ],
+          "relations": [
+            {
+              "rel": "provisioned_by",
+              "target": "code-seat-service:infra/terraform/pubsub.tf/google_pubsub_topic.seat_assigned"
+            }
+          ]
+        }
+      },
+      "acme-ekp.us-central1.ekp-interface": {
+        "data": {
+          "protocol": "pubsub",
+          "direction": "outbound"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "interface"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Interface** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `git:seat-service:src/main/java/com/example/seat/EligibilityService.java#publishSeatAssigned` @ `4be09a1c77d2` · extraction: deterministic\n> **Trust:** unverified · **Status:** stable · **Valid from:** 2026-10-01\n> **Relations:** provisioned by `code-seat-service:infra/terraform/pubsub.tf/google_pubsub_topic.seat_assigned`\n<!-- /ekp:header -->\n\n# Contract\n\nPublished by `EligibilityService.assignSeat()` after a successful assignment.\n\n## OKF Metadata\n\n```yaml\nstatus: stable\ngenerated:\n  by: ekp-java-extractor/0.1\n  at: 2026-10-01T00:00:00Z\nsources:\n  - id: src\n    resource: https://git.example.com/seat-service/blob/4be09a1c77d2/src/main/java/com/example/seat/EligibilityService.java\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "modules/src/main/java/com/example/seat/EligibilityService.java": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/code-seat-service/entries/modules/src/main/java/com/example/seat/EligibilityService.java",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/code-seat-service/entries/modules/src/main/java/com/example/seat",
+    "entrySource": {
+      "displayName": "EligibilityService (seat service)",
+      "description": "Spring service that evaluates the seat rules table and publishes seat-assigned events."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "code-seat-service:modules/src/main/java/com/example/seat/EligibilityService.java",
+          "concept_type": "Module",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "source_kind": "code",
+          "source_system": "git",
+          "source_ref": "git:seat-service:src/main/java/com/example/seat/EligibilityService.java",
+          "source_revision": "4be09a1c77d2",
+          "extraction": "deterministic",
+          "trust_tier": "machine_confirmed",
+          "valid_from": "2026-10-01T00:00:00Z",
+          "owner_team": "team:dcs-seating",
+          "build_id": "code-seat-service-20261124T180000Z",
+          "profile": "code-repo@2",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment",
+            "capability:seat-eligibility"
+          ],
+          "relations": [
+            {
+              "rel": "enforces",
+              "target": "code-seat-service:rules/src/main/resources/rules/seat-eligibility.yaml/INF_EXIT_ROW/eligibility-0945ef"
+            },
+            {
+              "rel": "exposes",
+              "target": "code-seat-service:interfaces/api/seat-api.yaml/assignSeat"
+            },
+            {
+              "rel": "calls",
+              "target": "code-seat-service:interfaces/src/main/java/com/example/seat/EligibilityService.java/publishSeatAssigned"
+            }
+          ]
+        }
+      },
+      "acme-ekp.us-central1.ekp-module": {
+        "data": {
+          "language": "java",
+          "module_kind": "service"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "module"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Module** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `git:seat-service:src/main/java/com/example/seat/EligibilityService.java` @ `4be09a1c77d2` · extraction: deterministic\n> **Trust:** machine_confirmed · **Status:** stable · **Valid from:** 2026-10-01\n> **Also about:** `capability:seat-eligibility`\n> **Relations:** enforces `code-seat-service:rules/src/main/resources/rules/seat-eligibility.yaml/INF_EXIT_ROW/eligibility-0945ef`; exposes `code-seat-service:interfaces/api/seat-api.yaml/assignSeat`; calls `code-seat-service:interfaces/src/main/java/com/example/seat/EligibilityService.java/publishSeatAssigned`\n<!-- /ekp:header -->\n\n# Purpose\n\n`assignSeat()` asks the rules table for the first reject reason. If there is\nnone, it assigns the seat and publishes a `seat-assigned` event.\n\n## OKF Metadata\n\n```yaml\ntags:\n  - seat-eligibility\nstatus: stable\ngenerated:\n  by: ekp-java-extractor/0.1\n  at: 2026-10-01T00:00:00Z\nverified:\n  - by: process:ekp-parity-check\n    at: 2026-11-24T18:05:00Z\nsources:\n  - id: src\n    resource: https://git.example.com/seat-service/blob/4be09a1c77d2/src/main/java/com/example/seat/EligibilityService.java\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  },
+  "rules/src/main/resources/rules/seat-eligibility.yaml/INF_EXIT_ROW/eligibility-0945ef": {
+    "name": "projects/acme-ekp/locations/us-central1/entryGroups/code-seat-service/entries/rules/src/main/resources/rules/seat-eligibility.yaml/INF_EXIT_ROW/eligibility-0945ef",
+    "entryType": "projects/dataplex-types/locations/global/entryTypes/document",
+    "parentEntry": "projects/acme-ekp/locations/us-central1/entryGroups/code-seat-service/entries/rules/src/main/resources/rules/seat-eligibility.yaml/INF_EXIT_ROW",
+    "entrySource": {
+      "displayName": "INF_EXIT_ROW: infant passenger may not take an exit-row seat (rules table)",
+      "description": "Rules-table row INF_EXIT_ROW rejects an exit-row seat with INF_EXIT when the passenger has a lap infant."
+    },
+    "aspects": {
+      "acme-ekp.us-central1.ekp-core": {
+        "data": {
+          "concept_id": "code-seat-service:rules/src/main/resources/rules/seat-eligibility.yaml/INF_EXIT_ROW/eligibility-0945ef",
+          "concept_type": "BusinessRule",
+          "lifecycle": "stable",
+          "domain": "departure-control",
+          "primary_system": "system:dcs",
+          "primary_component": "component:dcs.seat-assignment",
+          "primary_capability": "capability:seat-eligibility",
+          "source_kind": "code",
+          "source_system": "git",
+          "source_ref": "git:seat-service:src/main/resources/rules/seat-eligibility.yaml#INF_EXIT_ROW/eligibility-0945ef",
+          "source_revision": "4be09a1c77d2",
+          "extraction": "deterministic",
+          "trust_tier": "machine_confirmed",
+          "valid_from": "2026-10-01T00:00:00Z",
+          "owner_team": "team:dcs-seating",
+          "build_id": "code-seat-service-20261124T180000Z",
+          "profile": "code-repo@2",
+          "ontology_version": "1.1",
+          "anchors": [
+            "system:dcs",
+            "component:dcs.seat-assignment",
+            "capability:seat-eligibility",
+            "term:infant",
+            "term:exit-row"
+          ],
+          "relations": [
+            {
+              "rel": "implements",
+              "target": "brd-seat:requirements/BRD-SEAT/BR-SEAT-014"
+            },
+            {
+              "rel": "governed_by",
+              "target": "hld-dcs-seat:decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table"
+            },
+            {
+              "rel": "same_as",
+              "target": "code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743"
+            }
+          ]
+        }
+      },
+      "acme-ekp.us-central1.ekp-rule": {
+        "data": {
+          "rule_kind": "eligibility",
+          "enforcement": "config"
+        }
+      },
+      "dataplex-types.global.document": {
+        "data": {
+          "type": "business-rule"
+        }
+      },
+      "dataplex-types.global.overview": {
+        "data": {
+          "content": "\n<!-- ekp:header v1 -->\n> **Business Rule** · departure-control › system:dcs › component:dcs.seat-assignment\n> **Source:** `git:seat-service:src/main/resources/rules/seat-eligibility.yaml#INF_EXIT_ROW/eligibility-0945ef` @ `4be09a1c77d2` · extraction: deterministic\n> **Trust:** machine_confirmed · **Status:** stable · **Valid from:** 2026-10-01\n> **Also about:** `capability:seat-eligibility`, `term:infant`, `term:exit-row`\n> **Relations:** implements `brd-seat:requirements/BRD-SEAT/BR-SEAT-014`; governed by `hld-dcs-seat:decisions/HLD-DCS-SEAT-002/dec-seat-eligibility-rules-table`; same as `code-dcs-seat:rules/seatalloc/infant_rules.c/check_exit_row_infant/eligibility-353743`\n<!-- /ekp:header -->\n\n# Rule\n\nRow `INF_EXIT_ROW` in `rules/seat-eligibility.yaml`, effective 2026-10-01:\nreject with `INF_EXIT` when the seat is an exit row and the passenger's\n`infant_count` is greater than 0.\n\n```text\nINF_EXIT_ROW: seat.exit_row == true and pax.infant_count > 0 -> reject INF_EXIT\n```\n\nThis is the rules-table form of the legacy TPF check, per the HLD decision.\n\n## OKF Metadata\n\n```yaml\ntags:\n  - seat-eligibility\n  - infant\n  - exit-row\nstatus: stable\ngenerated:\n  by: ekp-rules-config-extractor/0.1\n  at: 2026-10-01T00:00:00Z\nverified:\n  - by: process:ekp-parity-check\n    at: 2026-11-24T18:05:00Z\nsources:\n  - id: row\n    resource: https://git.example.com/seat-service/blob/4be09a1c77d2/src/main/resources/rules/seat-eligibility.yaml\n```\n",
+          "contentType": "MARKDOWN"
+        }
+      }
+    }
+  }
+}

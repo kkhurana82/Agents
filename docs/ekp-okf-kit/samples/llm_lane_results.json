@@ -1,0 +1,20 @@
+[
+  {
+    "entry_id": "procedures/DCSOPS/48219911",
+    "type": "Procedure",
+    "model_type": "Procedure",
+    "confidence": 0.86,
+    "registry_candidates": [
+      "self-service kiosk"
+    ]
+  },
+  {
+    "entry_id": "unclassified/DCSOPS/48220450",
+    "type": "Unclassified",
+    "model_type": "Procedure",
+    "confidence": 0.41,
+    "registry_candidates": [
+      "kiosk vendor"
+    ]
+  }
+]

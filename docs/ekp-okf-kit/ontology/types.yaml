@@ -1,0 +1,117 @@
+# EKP concept ontology: the single contract every ingestion build emits into.
+# Organised by WHAT the knowledge is, never by WHERE it came from.
+# Change rules: adding a type, field or relation is a minor bump; renaming or
+# removing one is a major bump and needs a migration of every published bundle.
+ontology_version: "1.1"
+
+# ---------------------------------------------------------------------------
+# Anchor types. Only the registry build may emit these. Every other concept
+# must point at one or more anchors, which is what lets a rule from code, a
+# requirement from a BRD and a Jira epic meet at retrieval time.
+# ---------------------------------------------------------------------------
+anchor_types:
+  Domain:     {label: "Domain",     prefix: domain}
+  System:     {label: "System",     prefix: system}
+  Component:  {label: "Component",  prefix: component}
+  Capability: {label: "Capability", prefix: capability}
+  Term:       {label: "Term",       prefix: term}
+
+# ---------------------------------------------------------------------------
+# Knowledge types. `label` is what goes in the OKF `type` field.
+# `facet` names the per-type aspect (catalog/generated/ekp-<facet>.json).
+# ---------------------------------------------------------------------------
+knowledge_types:
+  Module:
+    label: "Module"
+    description: A unit of code in any language (class, package, service, program, job, function) and what it does.
+    facet: module
+  Interface:
+    label: "Interface"
+    description: A contract between parts - REST/gRPC/GraphQL operation, event or message (Pub/Sub, Kafka, MQ, EDIFACT, Type B), file.
+    facet: interface
+  DataEntity:
+    label: "Data Entity"
+    description: A table, DDL, dbt model, Avro/protobuf message, record layout or DSECT and its meaning.
+  InfraResource:
+    label: "Infra Resource"
+    description: Something infrastructure-as-code provisions or deploys (Terraform resource, Helm release, Kubernetes object).
+    facet: infra
+  BusinessRule:
+    label: "Business Rule"
+    description: A condition the business enforces, wherever it is stated or coded.
+    facet: rule
+  Requirement:
+    label: "Requirement"
+    description: A functional or non-functional requirement with an ID.
+    facet: requirement
+  Decision:
+    label: "Decision"
+    description: An architecture or product decision with its rationale.
+    facet: decision
+  Design:
+    label: "Design"
+    description: How a component or flow is designed (an HLD/architecture section).
+  Procedure:
+    label: "Procedure"
+    description: A runbook or how-to an operator or agent follows.
+  Change:
+    label: "Change"
+    description: An epic/feature-level change record. Tickets are its sources, not concepts.
+    facet: change
+  Unclassified:
+    label: "Unclassified"
+    description: Quarantine for low-confidence classification. Always status draft.
+
+# ---------------------------------------------------------------------------
+# Per-type facets. Only fields you will actually filter on belong here.
+# Scalars only: Knowledge Catalog cannot filter array fields server-side.
+# `enum` is enforced by the build gate, not the catalog, so vocabularies can
+# grow without a backwards-incompatible aspect template change.
+# ---------------------------------------------------------------------------
+facets:
+  module:
+    language:    {type: string, required: true, vocab: languages}
+    module_kind: {type: string, required: true, enum: [service, library, package, class, program, job, function, ui, pipeline]}
+  interface:
+    protocol:    {type: string, required: true, enum: [rest, grpc, graphql, soap, pubsub, kafka, mq, edifact, typeb, db, file, other]}
+    direction:   {type: string, required: true, enum: [inbound, outbound, both]}
+  infra:
+    tool:          {type: string, required: true, enum: [terraform, helm, kubernetes, cloudformation, pulumi, ansible, other]}
+    provider:      {type: string, required: true, enum: [gcp, aws, azure, kubernetes, onprem, other]}
+    resource_kind: {type: string, required: true}
+  rule:
+    rule_kind:   {type: string, required: true, enum: [eligibility, validation, calculation, routing, constraint]}
+    enforcement: {type: string, required: true, enum: [code, config, manual, unknown]}
+  requirement:
+    req_id:      {type: string, required: true}
+    req_kind:    {type: string, required: true, enum: [functional, nonfunctional]}
+    priority:    {type: string, required: true, enum: [must, should, could, wont]}
+    req_status:  {type: string, required: true, enum: [proposed, approved, implemented, retired]}
+  decision:
+    decision_status: {type: string, required: true, enum: [proposed, accepted, superseded, rejected]}
+    decided_on:      {type: datetime, required: false}
+  change:
+    change_status: {type: string, required: true, enum: [open, in_progress, done, cancelled]}
+    release:       {type: string, required: false}
+
+# ---------------------------------------------------------------------------
+# Typed relations. OKF links are untyped, so the type lives here, in the
+# ekp-core aspect (for Neo4j) and as prose in the body header (for readers).
+# `to: same` means the target must be the same type as the source.
+# ---------------------------------------------------------------------------
+relations:
+  implements:  {from: [Module, BusinessRule, Interface, Design], to: [Requirement, Decision]}
+  enforces:    {from: [Module], to: [BusinessRule]}
+  specifies:   {from: [Requirement], to: [BusinessRule]}
+  exposes:     {from: [Module], to: [Interface]}
+  reads:       {from: [Module], to: [DataEntity]}
+  writes:      {from: [Module], to: [DataEntity]}
+  calls:       {from: [Module], to: [Module, Interface]}
+  governed_by: {from: [Design, Module, Interface, BusinessRule], to: [Decision]}
+  describes:   {from: [Design, Procedure], to: [Module, Interface, DataEntity, BusinessRule, InfraResource]}
+  changes:     {from: [Change], to: [Module, Interface, DataEntity, BusinessRule, Requirement, Design, Decision, InfraResource]}
+  provisioned_by: {from: [Module, Interface, DataEntity], to: [InfraResource]}
+  runs_on:     {from: [Module], to: [InfraResource]}
+  depends_on:  {from: [InfraResource], to: [InfraResource]}
+  supersedes:  {from: [Decision, Requirement, BusinessRule], to: same}
+  same_as:     {from: [BusinessRule, Requirement, Interface, DataEntity], to: same}
